@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871980375333",
+    "project_id": "fieldapp-functionality",
+    "storage_bucket": "fieldapp-functionality.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871980375333:android:fd39757a8455e4ce9f0ecc",
+        "android_client_info": {
+          "package_name": "com.example.fieldapp_functionality"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqizUnZB8qoftwKHViDSOjdp16e8kbAak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
