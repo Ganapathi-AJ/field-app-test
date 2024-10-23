@@ -41,6 +41,9 @@ dependencies:
   flutter_phoenix: ^1.1.1
   path_provider: ^2.1.4
   flutter_cache_manager: ^3.4.1
+  firebase_storage: ^12.3.4
+  flutter_downloader: ^1.11.8
+  archive: ^3.6.1
 
 dev_dependencies:
   flutter_test:

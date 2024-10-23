@@ -1,48 +1,143 @@
-import 'package:fieldapp_functionality/FileDownloader.dart';
 import 'package:flutter/material.dart';
-import 'random_image.dart' deferred as random_image;
-
-void main() {
-  runApp(MyApp());
-}
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:archive/archive_io.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:path_provider/path_provider.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Dynamic Plugin Loader',
+      home: PluginManager(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
+class PluginManager extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _PluginManagerState createState() => _PluginManagerState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class _PluginManagerState extends State<PluginManager> {
+  bool isDownloading = false;
+  String? downloadPath;
+  
+  @override
+  void initState() {
+    super.initState();
+    FlutterDownloader.initialize();
   }
 
-  Future<void> _loadRandomImage() async {
-    await random_image.loadLibrary();
+  Future<void> checkAndDownloadModule(String moduleName) async {
+    // Check if module is enabled (Firestore Sync)
+    bool isEnabled = await checkModuleEnabled(moduleName);
+
+    if (isEnabled) {
+      // Get Firebase Storage URL
+      String downloadUrl = await getModuleDownloadURL(moduleName);
+
+      // Download Module
+      String? filePath = await downloadModule(downloadUrl, moduleName);
+
+      if (filePath != null) {
+        // Extract Module Files
+        await extractModuleFiles(filePath);
+
+        // Integrate module into the app (Deferred Loading)
+        await integrateModule(moduleName);
+      }
+    }
+  }
+
+  Future<bool> checkModuleEnabled(String moduleName) async {
+    DocumentSnapshot moduleDoc = await FirebaseFirestore.instance
+        .collection('modules')
+        .doc(moduleName)
+        .get();
+    return moduleDoc['enabled'] ?? false;
+  }
+
+  Future<String> getModuleDownloadURL(String moduleName) async {
+    return await FirebaseStorage.instance
+        .ref('$moduleName.zip')
+        .getDownloadURL();
+  }
+
+  Future<String?> downloadModule(String url, String moduleName) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final path = '${dir.path}/$moduleName.zip';
+
+    // Downloading the module using Flutter Downloader or HTTP
+    final taskId = await FlutterDownloader.enqueue(
+      url: url,
+      savedDir: dir.path,
+      fileName: '$moduleName.zip',
+      showNotification: true,
+      openFileFromNotification: true,
+    );
+
+    // Wait for download to complete
+    // You can listen to FlutterDownloader's status in production apps
+    return path; // Returning file path on completion
+  }
+
+  Future<void> extractModuleFiles(String filePath) async {
+    // Read the zip file from the path
+    final bytes = File(filePath).readAsBytesSync();
+
+    // Decode the archive
+    final archive = ZipDecoder().decodeBytes(bytes);
+
+    // Extract the contents to the app's documents directory
+    final dir = await getApplicationDocumentsDirectory();
+
+    for (final file in archive) {
+      final filename = '${dir.path}/${file.name}';
+      if (file.isFile) {
+        final data = file.content as List<int>;
+        File(filename).writeAsBytesSync(data);
+      } else {
+        Directory(filename).create(recursive: true);
+      }
+    }
+
+    // Optionally, you can delete the downloaded .zip file
+    File(filePath).deleteSync();
+  }
+
+  Future<void> integrateModule(String moduleName) async {
+    switch (moduleName) {
+      case 'attendance':
+        // Dynamically load attendance module (UI and logic)
+        await loadAttendanceModule();
+        break;
+      case 'sales':
+        await loadSalesModule();
+        break;
+      // Add more cases for other modules...
+      default:
+        print("Module not found");
+    }
+  }
+
+  Future<void> loadAttendanceModule() async {
+    // Use deferred loading to load the feature-specific code
+    await Future.delayed(Duration(seconds: 1)); // Simulate deferred loading
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => random_image.RandomImage()),
+      MaterialPageRoute(builder: (context) => AttendanceModulePage()),
+    );
+  }
+
+  Future<void> loadSalesModule() async {
+    await Future.delayed(Duration(seconds: 1)); // Simulate deferred loading
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SalesModulePage()),
     );
   }
 
@@ -50,12 +145,54 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Plugin Manager'),
       ),
-      body: const Center(
-          child: const FileDownloaderWidget(
-              fileUrl:
-                  "https://firebasestorage.googleapis.com/v0/b/field-app-3115d.appspot.com/o/filer.dart?alt=media&token=2b1e5511-f7d6-4f55-b92e-a88efb82aa72")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isDownloading)
+              CircularProgressIndicator()
+            else
+              ElevatedButton(
+                onPressed: () => checkAndDownloadModule('attendance'),
+                child: Text('Enable Attendance Module'),
+              ),
+            ElevatedButton(
+              onPressed: () => checkAndDownloadModule('sales'),
+              child: Text('Enable Sales Module'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AttendanceModulePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Attendance Module'),
+      ),
+      body: Center(
+        child: Text('Attendance Module Loaded!'),
+      ),
+    );
+  }
+}
+
+class SalesModulePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sales Module'),
+      ),
+      body: Center(
+        child: Text('Sales Module Loaded!'),
+      ),
     );
   }
 }
