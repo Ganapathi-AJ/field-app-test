@@ -1,0 +1,59 @@
+name: Unzip and Integrate Plugin
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  unzip_and_integrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: 🐦 Setup Shorebird
+        uses: shorebirdtech/setup-shorebird@v1
+        with:
+          cache: true
+
+      - name: Unzip Plugin Folder
+        run: |
+          unzip assets/attendance.zip -d temp_unzipped_plugin
+          unzip assets/sales.zip -d temp_unzipped_plugin
+
+      - name: Move Unzipped Files
+        run: |
+          mv temp_unzipped_plugin/* lib/
+
+      - name: Update main.dart with Import
+        run: |
+          echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
+          echo "import 'package:fieldapp_functionality/attendance/attendance.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "palash.rambhia.sg@gretail.com"
+          git config --local user.name "Palash-Onehub"
+          git checkout uk_test_k2_pi
+          git add .
+          git commit -m "Integrated new plugin"
+
+      # - name: Patch with Shorebird
+      #   run: |
+      #    curl -sSf https://install.shorebird.dev | sh
+      #    shorebird login:ci
+    
+      # - name: 🚀 Shorebird Release
+      #   id: shorebird-release
+      #   uses: shorebirdtech/shorebird-release@v0
+      #   with:
+      #      platform: android
+
+      # - name: 📝 Output Release Version
+      #   run: echo ${{ steps.shorebird-release.outputs.release-version }}
+  
+      # - name: Push Changes to Branch
+      #   run: |
+      #       git push origin main
