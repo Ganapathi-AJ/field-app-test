@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:fieldapp_functionality/attendance/attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -60,6 +61,5 @@ class _HomeState extends State<Home> {
   }
 }
 
-Map<String, Widget> plugins = {
-  'Attendance': Attendance(),
-};
+Map<String, Widget> plugins = {'Sales': Sales(),};
+
