@@ -13,10 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         
-      - name: 🐦 Setup Shorebird
-        uses: shorebirdtech/setup-shorebird@v1
-        with:
-          cache: true
+      # - name: 🐦 Setup Shorebird
+      #   uses: shorebirdtech/setup-shorebird@v1
+      #   with:
+      #     cache: true
 
       - name: Unzip Plugin Folder
         run: |
@@ -36,7 +36,6 @@ jobs:
         run: |
           git config --local user.email "palash.rambhia.sg@gretail.com"
           git config --local user.name "Palash-Onehub"
-          git checkout uk_test_k2_pi
           git add .
           git commit -m "Integrated new plugin"
 
@@ -54,6 +53,6 @@ jobs:
       # - name: 📝 Output Release Version
       #   run: echo ${{ steps.shorebird-release.outputs.release-version }}
   
-      # - name: Push Changes to Branch
-      #   run: |
-      #       git push origin main
+      - name: Push Changes to Branch
+        run: |
+            git push origin main
