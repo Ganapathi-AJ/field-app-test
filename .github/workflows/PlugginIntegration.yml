@@ -9,50 +9,50 @@ jobs:
   unzip_and_integrate:
     runs-on: ubuntu-latest
 
+    env:
+      KEYSTORE: ${{ secrets.KEYSTORE_PRODUCTION }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        
-      # - name: 🐦 Setup Shorebird
-      #   uses: shorebirdtech/setup-shorebird@v1
-      #   with:
-      #     cache: true
 
-      - name: Unzip Plugin Folder
+      - name: Unzip Attendance Plugin
+        if: contains(github.event.head_commit.message, 'Activate Attendance')
         run: |
           unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
+
+      - name: Unzip Sales Plugin
+        if: contains(github.event.head_commit.message, 'Activate Sales')
+        run: |
           unzip assets/sales.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
 
       - name: Move Unzipped Files
+        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
           mv temp_unzipped_plugin/* lib/
 
-      - name: Update main.dart with Import
+      - name: Update main.dart with Attendance Import
+        if: contains(github.event.head_commit.message, 'Activate Attendance')
         run: |
-          echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
           echo "import 'package:fieldapp_functionality/attendance/attendance.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
 
+      - name: Update main.dart with Sales Import
+        if: contains(github.event.head_commit.message, 'Activate Sales')
+        run: |
+          echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
+
       - name: Commit and Push Changes
+        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
           git config --local user.email "palash.rambhia.sg@gretail.com"
           git config --local user.name "Palash-Onehub"
           git add .
           git commit -m "Integrated new plugin"
 
-      # - name: Patch with Shorebird
-      #   run: |
-      #    curl -sSf https://install.shorebird.dev | sh
-      #    shorebird login:ci
-    
-      # - name: 🚀 Shorebird Release
-      #   id: shorebird-release
-      #   uses: shorebirdtech/shorebird-release@v0
-      #   with:
-      #      platform: android
-
-      # - name: 📝 Output Release Version
-      #   run: echo ${{ steps.shorebird-release.outputs.release-version }}
-  
       - name: Push Changes to Branch
+        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
-            git push origin main
+          git push origin main
