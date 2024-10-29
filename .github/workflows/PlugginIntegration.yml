@@ -47,6 +47,7 @@ jobs:
       - name: Replace Attendace in main.dart
         if: contains(github.event.head_commit.message, 'Activate Attendance')
         run: |
+          sed -i '63,$d' lib/main.dart
           echo "
           Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
           " >> lib/main.dart
@@ -54,7 +55,7 @@ jobs:
       - name: Replace Sales in main.dart
         if: contains(github.event.head_commit.message, 'Activate Sales')
         run: |
-          sed -i '39,$d' lib/main.dart
+          sed -i '63,$d' lib/main.dart
           echo "
           Map<String, Widget> plugins = {'Sales': Sales(),};
           " >> lib/main.dart
