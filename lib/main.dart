@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/attendance/attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,3 +36,6 @@ class _HomeState extends State<Home> {
     return Center();
   }
 }
+
+Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
+
