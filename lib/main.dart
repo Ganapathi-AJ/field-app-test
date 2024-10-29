@@ -61,4 +61,3 @@ class _HomeState extends State<Home> {
 }
 
 Map<String, Widget> plugins = {'Sales': Sales(),};
-
