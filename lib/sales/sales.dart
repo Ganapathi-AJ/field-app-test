@@ -10,8 +10,8 @@ class Sales extends StatefulWidget {
 class _SalesState extends State<Sales> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Sales Widget"),
+    return Scaffold(
+      body: Center(child: Text("Sales Widget")),
     );
   }
 }
