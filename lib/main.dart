@@ -1,5 +1,3 @@
-import 'package:fieldapp_functionality/attendance/attendance.dart';
-import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,7 +25,7 @@ class PluginManager extends StatefulWidget {
 class _PluginManagerState extends State<PluginManager> {
   bool isDownloading = false;
   String? downloadPath;
-  
+
   @override
   void initState() {
     super.initState();
