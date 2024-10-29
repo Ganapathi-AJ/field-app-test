@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/attendance/attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,10 +33,33 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Center();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dynamic Plugin Loader'),
+      ),
+      body: plugins.isNotEmpty
+          ? ListView(
+              children: plugins.keys.map((pluginName) {
+                return ListTile(
+                  title: Text(pluginName),
+                  trailing: Icon(Icons.arrow_forward),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => plugins[pluginName]!),
+                    );
+                  },
+                );
+              }).toList(),
+            )
+          : Center(
+              child: Text('No plugins available'),
+            ),
+    );
   }
 }
 
 Map<String, Widget> plugins = {
-  // 'Sales': Sales(),
+  'attendance': Attendance(),
 };
