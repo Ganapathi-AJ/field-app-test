@@ -60,6 +60,5 @@ class _HomeState extends State<Home> {
   }
 }
 
-Map<String, Widget> plugins = {
-  'attendance': Attendance(),
-};
+Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
+

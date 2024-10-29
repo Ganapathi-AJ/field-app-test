@@ -44,6 +44,21 @@ jobs:
         run: |
           echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
 
+      - name: Replace Attendace in main.dart
+        if: contains(github.event.head_commit.message, 'Activate Attendance')
+        run: |
+          echo "
+          Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
+          " >> lib/main.dart
+
+      - name: Replace Sales in main.dart
+        if: contains(github.event.head_commit.message, 'Activate Sales')
+        run: |
+          sed -i '39,$d' lib/main.dart
+          echo "
+          Map<String, Widget> plugins = {'Sales': Sales(),};
+          " >> lib/main.dart
+
       - name: Commit and Push Changes
         if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
