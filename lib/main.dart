@@ -1,4 +1,5 @@
 import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
+import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -35,7 +36,30 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: KnowledgeHub(),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SalesDashboard();
+                  }));
+                },
+                child: Text("Sales Dashboard")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return InvoiceScanningScreen();
+                  }));
+                },
+                child: Text("Invoice Screen"))
+          ],
+        ),
+      ),
       // plugins.isNotEmpty
       //     ? ListView(
       //         children: plugins.keys.map((pluginName) {

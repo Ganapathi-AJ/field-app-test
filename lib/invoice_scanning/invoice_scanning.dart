@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class InvoiceScanningScreen extends StatelessWidget {
   const InvoiceScanningScreen({super.key});
 
-  final bool noInvoiceAvl = false;
+  final bool noInvoiceAvl = true;
 
   @override
   Widget build(BuildContext context) {
