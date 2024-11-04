@@ -44,6 +44,8 @@ dependencies:
   firebase_storage: ^12.3.4
   flutter_downloader: ^1.11.8
   archive: ^3.6.1
+  gap: ^3.0.1
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

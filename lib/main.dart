@@ -34,32 +34,30 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dynamic Plugin Loader'),
-      ),
-      body: plugins.isNotEmpty
-          ? ListView(
-              children: plugins.keys.map((pluginName) {
-                return ListTile(
-                  title: Text(pluginName),
-                  trailing: const Icon(Icons.arrow_forward),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => plugins[pluginName]!),
-                    );
-                  },
-                );
-              }).toList(),
-            )
-          : const Center(
-              child: const Text('No plugins available'),
-            ),
+      body: SalesDashboard(),
+      // plugins.isNotEmpty
+      //     ? ListView(
+      //         children: plugins.keys.map((pluginName) {
+      //           return ListTile(
+      //             title: Text(pluginName),
+      //             trailing: const Icon(Icons.arrow_forward),
+      //             onTap: () {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(
+      //                     builder: (context) => plugins[pluginName]!),
+      //               );
+      //             },
+      //           );
+      //         }).toList(),
+      //       )
+      //     : const Center(
+      //         child: const Text('No plugins available'),
+      //       ),
     );
   }
 }
 
 
-Map<String, Widget> plugins = {'Sales': Sales(),};
+// Map<String, Widget> plugins = {'Sales': Sales(),};
 
