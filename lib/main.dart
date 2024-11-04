@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -34,7 +35,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SalesDashboard(),
+      body: KnowledgeHub(),
       // plugins.isNotEmpty
       //     ? ListView(
       //         children: plugins.keys.map((pluginName) {
