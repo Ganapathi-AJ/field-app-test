@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return QRScannerScreen();
+                    return QRBarcodeScannerScreen();
                   }));
                 },
                 child: Text("QR Screen"))

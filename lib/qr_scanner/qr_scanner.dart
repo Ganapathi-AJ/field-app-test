@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
-class QRScannerScreen extends StatefulWidget {
+class QRBarcodeScannerScreen extends StatefulWidget {
   @override
-  _QRScannerScreenState createState() => _QRScannerScreenState();
+  _QRBarcodeScannerScreenState createState() => _QRBarcodeScannerScreenState();
 }
 
-class _QRScannerScreenState extends State<QRScannerScreen> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
-  String? scannedCode;
+class _QRBarcodeScannerScreenState extends State<QRBarcodeScannerScreen> {
+  String? scanResult;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('QR Code Scanner')),
+      appBar: AppBar(title: Text('QR & Barcode Scanner')),
       body: Column(
         children: [
           Expanded(
             flex: 4,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
+            child: MobileScanner(
+              onDetect: (capture) {
+                final List<Barcode> barcodes = capture.barcodes;
+                final String? value =
+                    barcodes.isNotEmpty ? barcodes.first.rawValue : null;
+                setState(() {
+                  scanResult = value;
+                });
+              },
             ),
           ),
           Expanded(
             flex: 1,
             child: Center(
               child: Text(
-                scannedCode != null ? 'Result: $scannedCode' : 'Scan a QR code',
+                scanResult != null
+                    ? 'Result: $scanResult'
+                    : 'Scan a QR code or Barcode',
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -36,20 +42,5 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         ],
       ),
     );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        scannedCode = scanData.code;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
