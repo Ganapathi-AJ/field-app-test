@@ -2,6 +2,7 @@ import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
 import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
+import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -59,6 +60,14 @@ class _HomeState extends State<Home> {
                   }));
                 },
                 child: Text("Invoice Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return QRScannerScreen();
+                  }));
+                },
+                child: Text("QR Screen")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
