@@ -46,7 +46,10 @@ dependencies:
   archive: ^3.6.1
   gap: ^3.0.1
   fl_chart: ^0.69.0
+  # arcore_flutter_plugin: ^0.1.0 
   qr_code_scanner_plus: ^2.0.6
+  camera: ^0.11.0+2
+  speech_to_text: ^7.0.0
   mobile_scanner: ^6.0.2
 
 dev_dependencies:
