@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:convert';
 
@@ -143,6 +145,7 @@ class _CameraScreenState extends State<CameraScreen> {
   stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
   String _text = '';
+  File? _imageFile;
 
   @override
   void initState() {
@@ -150,13 +153,32 @@ class _CameraScreenState extends State<CameraScreen> {
     _initializeCamera();
   }
 
-  List<CameraDescription> cameras = [];
-
   Future<void> _initializeCamera() async {
-    cameras = await availableCameras();
+    final cameras = await availableCameras();
     _controller = CameraController(cameras[0], ResolutionPreset.high);
     await _controller!.initialize();
     setState(() {});
+  }
+
+  Future<void> _captureImage() async {
+    try {
+      final directory = await getTemporaryDirectory();
+      final imagePath = '${directory.path}/${DateTime.now()}.png';
+      await _controller!.takePicture().then((image) async =>
+          File(imagePath).writeAsBytes(await image.readAsBytes()));
+      setState(() {
+        _imageFile = File(imagePath);
+      });
+    } catch (e) {
+      print('Error capturing image: $e');
+    }
+  }
+
+  Future<String> _uploadImageToFirebase(File imageFile) async {
+    final storageRef =
+        FirebaseStorage.instance.ref().child('images/${DateTime.now()}.png');
+    await storageRef.putFile(imageFile);
+    return await storageRef.getDownloadURL();
   }
 
   void _startListening() async {
@@ -164,7 +186,6 @@ class _CameraScreenState extends State<CameraScreen> {
     if (available) {
       setState(() => _isListening = true);
       _speech.listen(onResult: (result) {
-        print(result);
         setState(() => _text = result.recognizedWords);
       });
     }
@@ -172,25 +193,47 @@ class _CameraScreenState extends State<CameraScreen> {
 
   void _stopListening() {
     _speech.stop();
-    setState(() {
-      _isListening = false;
-    });
-    if (_text.isNotEmpty) {
+    setState(() => _isListening = false);
+    if (_text.isNotEmpty && _imageFile != null) {
+      _analyzeImage();
+    }
+  }
+
+  Future<void> _analyzeImage() async {
+    if (_imageFile == null) return;
+
+    setState(() => _isListening = false);
+    final imageUrl = await _uploadImageToFirebase(_imageFile!);
+
+    final response = await http.post(
+      Uri.parse(
+          'https://image-analysis-vj3t6ewmoa-uc.a.run.app/analyze-image/'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        "image_url": imageUrl,
+        "prompt": _text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ResultsScreen(
-            text: _text,
+            analysisResult: data['analysis'],
           ),
         ),
       );
+    } else {
+      print("Error: ${response.statusCode}");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_controller == null || !_controller!.value.isInitialized) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(
@@ -203,43 +246,44 @@ class _CameraScreenState extends State<CameraScreen> {
             right: 0,
             child: Container(
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                  color: Colors.white),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+                color: Colors.white,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // IconButton(
-                    //   icon: const Icon(Icons.camera,
-                    //       size: 20, color: Colors.black),
-                    //   onPressed: () {
-                    //     // Implement image capture if needed
-                    //   },
-                    // ),
-                    Flexible(
-                        child:
-                            Text("Place the product in front of the camera")),
+                    if (_imageFile == null)
+                      IconButton(
+                        icon: const Icon(Icons.camera,
+                            size: 20, color: Colors.black),
+                        onPressed: _captureImage,
+                      ),
+                    const Flexible(
+                      child: Text("Place the product in front of the camera"),
+                    ),
                     const SizedBox(width: 30),
-                    IconButton(
-                      icon: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue[100],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            _isListening ? Icons.mic : Icons.mic_none,
-                            color: Colors.blue,
+                    if (_imageFile != null)
+                      IconButton(
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.blue[100],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              _isListening ? Icons.mic : Icons.mic_none,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
+                        onPressed:
+                            _isListening ? _stopListening : _startListening,
                       ),
-                      onPressed:
-                          _isListening ? _stopListening : _startListening,
-                    ),
                   ],
                 ),
               ),
@@ -252,21 +296,21 @@ class _CameraScreenState extends State<CameraScreen> {
 }
 
 class ResultsScreen extends StatelessWidget {
-  final String text;
+  final String analysisResult;
 
-  ResultsScreen({required this.text});
+  ResultsScreen({required this.analysisResult});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Analysis Result'),
+        title: Text('Analysis Result'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          'User Prompt: $text',
-          style: const TextStyle(fontSize: 18),
+          'Analysis: $analysisResult',
+          style: TextStyle(fontSize: 18),
         ),
       ),
     );
