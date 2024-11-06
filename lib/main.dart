@@ -1,17 +1,9 @@
 import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
-import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
 import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:archive/archive_io.dart';
-import 'dart:io';
-import 'dart:async';
-import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,6 +65,16 @@ class _HomeState extends State<Home> {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return ImageAnalysisScreen();
+                  }));
+                },
+                child: Text("Image Analysis")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return WebViewPage(
+                      url: "https://mywebar.com/p/Project_0_wrctjhqt9p",
+                    );
                   }));
                 },
                 child: Text("Image Analysis")),

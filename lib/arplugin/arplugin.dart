@@ -1,86 +1,63 @@
-// import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
-// import 'package:flutter/material.dart';
-// import 'package:vector_math/vector_math_64.dart' as vector;
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-// class ARViewScreen extends StatefulWidget {
-//   @override
-//   _ARViewScreenState createState() => _ARViewScreenState();
-// }
+class WebViewPage extends StatefulWidget {
+  final String url;
 
-// class _ARViewScreenState extends State<ARViewScreen> {
-//   late ArCoreController arCoreController;
+  const WebViewPage({Key? key, required this.url}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Hello World'),
-//         ),
-//         body: ArCoreView(
-//           onArCoreViewCreated: _onArCoreViewCreated,
-//         ),
-//       ),
-//     );
-//   }
+  @override
+  State<WebViewPage> createState() => _WebViewPageState();
+}
 
-//   void _onArCoreViewCreated(ArCoreController controller) {
-//     arCoreController = controller;
+class _WebViewPageState extends State<WebViewPage> {
+  InAppWebViewController? _webViewController;
+  bool _permissionGranted = false;
 
-//     _addSphere(arCoreController);
-//     _addCylindre(arCoreController);
-//     _addCube(arCoreController);
-//   }
+  @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();
+  }
 
-//   void _addSphere(ArCoreController controller) {
-//     final material = ArCoreMaterial(color: Color.fromARGB(120, 66, 134, 244));
-//     final sphere = ArCoreSphere(
-//       materials: [material],
-//       radius: 0.1,
-//     );
-//     final node = ArCoreNode(
-//       shape: sphere,
-//       position: vector.Vector3(0, 0, -1.5),
-//     );
-//     controller.addArCoreNode(node);
-//   }
+  Future<void> _requestCameraPermission() async {
+    final status = await Permission.camera.request();
+    setState(() {
+      _permissionGranted = status.isGranted;
+    });
+  }
 
-//   void _addCylindre(ArCoreController controller) {
-//     final material = ArCoreMaterial(
-//       color: Colors.red,
-//       reflectance: 1.0,
-//     );
-//     final cylindre = ArCoreCylinder(
-//       materials: [material],
-//       radius: 0.5,
-//       height: 0.3,
-//     );
-//     final node = ArCoreNode(
-//       shape: cylindre,
-//       position: vector.Vector3(0.0, -0.5, -2.0),
-//     );
-//     controller.addArCoreNode(node);
-//   }
-
-//   void _addCube(ArCoreController controller) {
-//     final material = ArCoreMaterial(
-//       color: Color.fromARGB(120, 66, 134, 244),
-//       metallic: 1.0,
-//     );
-//     final cube = ArCoreCube(
-//       materials: [material],
-//       size: vector.Vector3(0.5, 0.5, 0.5),
-//     );
-//     final node = ArCoreNode(
-//       shape: cube,
-//       position: vector.Vector3(-0.5, 0.5, -3.5),
-//     );
-//     controller.addArCoreNode(node);
-//   }
-
-//   @override
-//   void dispose() {
-//     arCoreController.dispose();
-//     super.dispose();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      body: _permissionGranted
+          ? InAppWebView(
+              initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+              initialOptions: InAppWebViewGroupOptions(
+                crossPlatform: InAppWebViewOptions(
+                  mediaPlaybackRequiresUserGesture: false,
+                ),
+                ios: IOSInAppWebViewOptions(
+                  allowsInlineMediaPlayback: true,
+                ),
+              ),
+              onWebViewCreated: (controller) {
+                _webViewController = controller;
+              },
+              androidOnPermissionRequest:
+                  (controller, origin, resources) async {
+                return PermissionRequestResponse(
+                    resources: resources,
+                    action: PermissionRequestResponseAction.GRANT);
+              },
+            )
+          : const Center(
+              child: Text('Camera permission is required to use this feature'),
+            ),
+    );
+  }
+}
