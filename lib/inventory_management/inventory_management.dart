@@ -1,4 +1,4 @@
-import 'package:fieldapp_functionality/inventory_management/inventory_data.dart';
+import 'package:fieldapp_functionality/data/inventory_data.dart';
 import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
