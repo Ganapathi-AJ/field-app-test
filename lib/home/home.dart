@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/inventory_management/inventory_management.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -462,7 +463,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                    const Gap(20)
+                    const Gap(20),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return InventoryManagementScreen();
+                            },
+                          ));
+                        },
+                        child: Text('Inventory Management'))
                   ],
                 ),
               ),
