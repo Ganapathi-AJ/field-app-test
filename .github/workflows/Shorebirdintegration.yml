@@ -24,23 +24,23 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Configure Git
-        run: |
-          git config --global user.name 'Palash-Onehub'
-          git config --global user.email 'palash.rambhia.sg@gretail.com'
+      # - name: Configure Git
+      #   run: |
+      #     git config --global user.name 'Palash-Onehub'
+      #     git config --global user.email 'palash.rambhia.sg@gretail.com'
       
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '17'
+      # - name: Setup Java
+      #   uses: actions/setup-java@v4
+      #   with:
+      #     distribution: 'adopt'
+      #     java-version: '17'
       
-      - name: Setup Shorebird
-        uses: shorebirdtech/setup-shorebird@v1
-        with:
-          cache: true
+      # - name: Setup Shorebird
+      #   uses: shorebirdtech/setup-shorebird@v1
+      #   with:
+      #     cache: true
 
-      - name: Shorebird Patch
-        uses: shorebirdtech/shorebird-patch@v0
-        with:
-          platform: android
+      # - name: Shorebird Patch
+      #   uses: shorebirdtech/shorebird-patch@v0
+      #   with:
+      #     platform: android

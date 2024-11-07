@@ -18,57 +18,79 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Unzip Attendance Plugin
-        if: contains(github.event.head_commit.message, 'Activate Attendance')
-        run: |
-          unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            architecture: x64    
 
-      - name: Unzip Sales Plugin
-        if: contains(github.event.head_commit.message, 'Activate Sales')
-        run: |
-          unzip assets/sales.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
+      # - name: Unzip Attendance Plugin
+      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
+      #   run: |
+      #     unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
 
-      - name: Move Unzipped Files
-        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
-        run: |
-          mv temp_unzipped_plugin/* lib/
+      # - name: Unzip Sales Plugin
+      #   if: contains(github.event.head_commit.message, 'Activate Sales')
+      #   run: |
+      #     unzip assets/sales.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
 
-      - name: Update main.dart with Attendance Import
-        if: contains(github.event.head_commit.message, 'Activate Attendance')
-        run: |
-          echo "import 'package:fieldapp_functionality/attendance/attendance.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
+      # - name: Move Unzipped Files
+      #   if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
+      #   run: |
+      #     mv temp_unzipped_plugin/* lib/
 
-      - name: Update main.dart with Sales Import
-        if: contains(github.event.head_commit.message, 'Activate Sales')
-        run: |
-          echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
+      # - name: Update main.dart with Attendance Import
+      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
+      #   run: |
+      #     echo "import 'package:fieldapp_functionality/attendance/attendance.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
 
-      - name: Replace Attendace in main.dart
-        if: contains(github.event.head_commit.message, 'Activate Attendance')
-        run: |
-          sed -i '63,$d' lib/main.dart
-          echo "
-          Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
-          " >> lib/main.dart
+      # - name: Update main.dart with Sales Import
+      #   if: contains(github.event.head_commit.message, 'Activate Sales')
+      #   run: |
+      #     echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
 
-      - name: Replace Sales in main.dart
-        if: contains(github.event.head_commit.message, 'Activate Sales')
+      # - name: Replace Attendace in main.dart
+      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
+      #   run: |
+      #     sed -i '63,$d' lib/main.dart
+      #     echo "
+      #     Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
+      #     " >> lib/main.dart
+
+      # - name: Replace Sales in main.dart
+      #   if: contains(github.event.head_commit.message, 'Activate Sales')
+      #   run: |
+      #     sed -i '63,$d' lib/main.dart
+      #     echo "
+      #     Map<String, Widget> plugins = {'Sales': Sales(),};
+      #     " >> lib/main.dart
+
+      - name: Add Plugin Based on Commit Message
+        if: contains(github.event.head_commit.message, 'Add plugin')
         run: |
-          sed -i '63,$d' lib/main.dart
-          echo "
-          Map<String, Widget> plugins = {'Sales': Sales(),};
-          " >> lib/main.dart
+          plugin_name=$(echo "${{ github.event.head_commit.message }}" | sed -n 's/^.*Add plugin \([^ ]*\).*$/\1/p')
+          if [ -n "$plugin_name" ]; then
+            flutter pub add "$plugin_name"
+          else
+            echo "No plugin specified in commit message."
+          fi
 
       - name: Commit and Push Changes
-        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
           git config --local user.email "palash.rambhia.sg@gretail.com"
           git config --local user.name "Palash-Onehub"
           git add .
-          git commit -m "Integrated new plugin"
+          git commit -m "Integrated New Pluggin"
 
       - name: Push Changes to Branch
-        if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
         run: |
           git push origin main
