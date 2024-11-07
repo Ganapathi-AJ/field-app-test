@@ -11,7 +11,7 @@ class InvoiceScanningScreen extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 246, 247, 250),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 246, 247, 250),
-        title: const Text('Invoice Going'),
+        title: const Text('Invoice Scanning'),
         centerTitle: true,
       ),
       body: Center(
