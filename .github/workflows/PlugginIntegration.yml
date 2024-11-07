@@ -69,7 +69,7 @@ jobs:
       - name: Replace Text in invoice_scanning.dart
         if: contains(github.event.head_commit.message, 'Activate Invoice')
         run: |
-          sed -i "s/title: const Text('Invoice Scanning')/title: const Text('Invoice Going')/" lib/invoice_scanning/invoice_scanning.dart
+          sed -i "s/title: const Text('Invoice Going')/title: const Text('Invoice Scanning')/" lib/invoice_scanning/invoice_scanning.dart
 
       # - name: Add Plugin Based on Commit Message
       #   if: contains(github.event.head_commit.message, 'Add plugin')
