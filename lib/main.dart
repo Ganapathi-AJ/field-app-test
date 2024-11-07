@@ -1,5 +1,6 @@
 import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/firebase_options.dart';
+import 'package:fieldapp_functionality/home/home.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
 import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
@@ -43,67 +44,68 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return SalesDashboard();
-                  }));
-                },
-                child: Text("Sales Dashboard")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return InvoiceScanningScreen();
-                  }));
-                },
-                child: Text("Invoice Screen")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return QRBarcodeScannerScreen();
-                  }));
-                },
-                child: Text("QR Screen")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return ImageAnalysisScreen();
-                  }));
-                },
-                child: Text("Image Analysis")),
-          ],
-        ),
-      ),
-      // plugins.isNotEmpty
-      //     ? ListView(
-      //         children: plugins.keys.map((pluginName) {
-      //           return ListTile(
-      //             title: Text(pluginName),
-      //             trailing: const Icon(Icons.arrow_forward),
-      //             onTap: () {
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                     builder: (context) => plugins[pluginName]!),
-      //               );
-      //             },
-      //           );
-      //         }).toList(),
-      //       )
-      //     : const Center(
-      //         child: const Text('No plugins available'),
-      //       ),
-    );
+    return const Scaffold(body: HomeScreen()
+
+        // Center(
+        //   child: Column(
+        //     mainAxisSize: MainAxisSize.max,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       ElevatedButton(
+        //           onPressed: () {
+        //             Navigator.of(context)
+        //                 .push(MaterialPageRoute(builder: (context) {
+        //               return const SalesDashboard();
+        //             }));
+        //           },
+        //           child: const Text("Sales Dashboard")),
+        //       ElevatedButton(
+        //           onPressed: () {
+        //             Navigator.of(context)
+        //                 .push(MaterialPageRoute(builder: (context) {
+        //               return const InvoiceScanningScreen();
+        //             }));
+        //           },
+        //           child: const Text("Invoice Screen")),
+        //       ElevatedButton(
+        //           onPressed: () {
+        //             Navigator.of(context)
+        //                 .push(MaterialPageRoute(builder: (context) {
+        //               return QRBarcodeScannerScreen();
+        //             }));
+        //           },
+        //           child: const Text("QR Screen")),
+        //       ElevatedButton(
+        //           onPressed: () {
+        //             Navigator.of(context)
+        //                 .push(MaterialPageRoute(builder: (context) {
+        //               return ImageAnalysisScreen();
+        //             }));
+        //           },
+        //           child: const Text("Image Analysis")),
+        //     ],
+        //   ),
+        // ),
+        // plugins.isNotEmpty
+        //     ? ListView(
+        //         children: plugins.keys.map((pluginName) {
+        //           return ListTile(
+        //             title: Text(pluginName),
+        //             trailing: const Icon(Icons.arrow_forward),
+        //             onTap: () {
+        //               Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                     builder: (context) => plugins[pluginName]!),
+        //               );
+        //             },
+        //           );
+        //         }).toList(),
+        //       )
+        //     : const Center(
+        //         child: const Text('No plugins available'),
+        //       ),
+        );
   }
 }
 

@@ -268,7 +268,13 @@ class _CameraScreenState extends State<CameraScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(Icons.arrow_back_ios, color: Colors.white),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                         const Text(
                           'Image Analysis',
                           style: TextStyle(fontSize: 18, color: Colors.white),
