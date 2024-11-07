@@ -8,6 +8,7 @@ import 'package:fieldapp_functionality/sales/sales.dart';
 import 'package:fieldapp_functionality/surveyform/surveyform.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +21,18 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Dynamic Plugin Loader',
-      home: Home(),
-    );
+    return ScreenUtilInit(
+        designSize: const Size(182, 394),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        // Use builder only if you need to use library outside ScreenUtilInit context
+        builder: (_, child) {
+          return const MaterialApp(
+            title: 'Dynamic Plugin Loader',
+            debugShowCheckedModeBanner: false,
+            home: Home(),
+          );
+        });
   }
 }
 

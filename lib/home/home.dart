@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fieldapp_functionality/global/widgets/raleway.dart';
+import 'package:fieldapp_functionality/global/constants.dart';
+import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:fieldapp_functionality/global/widgets/welcome.dart' as wd;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,24 +50,40 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget returnTheWidget(Map mapData) {
     String widgetType = mapData['widget-type'];
     int typeNumber = mapData['widget-number'];
-    Widget currentWidget = Gap(10);
+    Widget currentWidget = const Gap(10);
 
-    if (widgetType == 'raleway') {
-      if (typeNumber == 1) {
-        currentWidget = RalewayType1(
-            heading: mapData['title'],
-            redirection: '/',
-            children: mapData['children']);
-      }
+    switch (widgetType) {
+      case DynamicWidgetTypes.BANNER:
+        if (typeNumber == 1) {
+          currentWidget = BannerType1(imageUrl: mapData['imageUrl']);
+        } else if (typeNumber == 2) {
+          currentWidget = BannerType2(imageUrl: mapData['imageUrl']);
+        } else if (typeNumber == 3) {
+          currentWidget = BannerType3(imageUrl: mapData['imageUrl']);
+        }
+        break;
+      case DynamicWidgetTypes.CAROUSEL:
+        if (typeNumber == 1) {
+          currentWidget = CarouselType1(imagesList: mapData['imagesList']);
+        } else if (typeNumber == 2) {
+          currentWidget = CarouselType2(imagesList: mapData['imagesList']);
+        }
+        break;
+      case DynamicWidgetTypes.RALEWAY:
+        if (typeNumber == 1) {
+          currentWidget = RalewayType1(
+              heading: mapData['title'],
+              redirection: '/',
+              children: mapData['children']);
+        }
+        break;
     }
+
     return currentWidget;
   }
 
   @override
   Widget build(BuildContext context) {
-    Map _firstWidgetMap = layoutData.firstWhere(
-      (element) => element['order'] == 1,
-    );
     return Scaffold(
         backgroundColor: const Color(0xffF7F7F7),
         body: SingleChildScrollView(
@@ -75,12 +91,19 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                Gap(20),
-                wd.WelcomeType1(greeting: 'Good Evening', name: 'John Doe'),
+                const Gap(20),
+                WelcomeType1(greeting: 'Good Evening', name: 'John Doe'),
+                const CarouselType2(
+                  imagesList: [
+                    "https://i.imgur.com/2nCt3Sbl.jpg",
+                    "https://i.imgur.com/2nCt3Sbl.jpg",
+                    "https://i.imgur.com/2nCt3Sbl.jpg"
+                  ],
+                ),
                 RalewayType1(
                   heading: 'Hi',
                   redirection: '/ds',
-                  children: [
+                  children: const [
                     {
                       'title': 'Inventory Management',
                       'imageUrl':

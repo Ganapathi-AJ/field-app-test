@@ -1,0 +1,225 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class CarouselType1 extends StatefulWidget {
+  const CarouselType1(
+      {super.key, required this.imagesList, this.autoPlay = true});
+  final List<String> imagesList;
+  final bool autoPlay;
+
+  @override
+  State<CarouselType1> createState() => _CarouselType1State();
+}
+
+class _CarouselType1State extends State<CarouselType1> {
+  int currentPage = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+            height: 52.h,
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 52.h,
+                viewportFraction: 1,
+                enableInfiniteScroll: true,
+                autoPlay: widget.autoPlay,
+                autoPlayInterval: const Duration(seconds: 3),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    currentPage = index;
+                  });
+                },
+              ),
+              items: widget.imagesList.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return CachedNetworkImage(
+                      imageUrl: i,
+                      height: 52.h,
+                    );
+                  },
+                );
+              }).toList(),
+            )),
+        SizedBox(height: 5.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.imagesList.length; i++)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: i == currentPage ? 9.2.w : 2.5.h,
+                height: 2.5.h,
+                margin: i == widget.imagesList.length - 1
+                    ? EdgeInsets.zero
+                    : EdgeInsets.only(right: 2.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(22.r)),
+                  color: currentPage == i
+                      ? Colors.blue
+                      : Colors.blue.withOpacity(0.2),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class CarouselType2 extends StatefulWidget {
+  const CarouselType2(
+      {super.key, required this.imagesList, this.autoPlay = true});
+  final List<String> imagesList;
+  final bool autoPlay;
+
+  @override
+  State<CarouselType2> createState() => _CarouselType2State();
+}
+
+class _CarouselType2State extends State<CarouselType2> {
+  int currentPage = 0;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 3), (Timer t) {
+      goToNext();
+    });
+  }
+
+  void goToNext() {
+    if (!widget.autoPlay) {
+      return;
+    }
+    if (currentPage < widget.imagesList.length - 1) {
+      currentPage++;
+    } else {
+      currentPage = 0;
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.imagesList.length; i++)
+              GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity! > 0) {
+                    if (currentPage > 0) {
+                      setState(() {
+                        currentPage--;
+                        timer.cancel();
+                        timer = Timer.periodic(const Duration(seconds: 3),
+                            (Timer t) {
+                          goToNext();
+                        });
+                      });
+                    }
+                  } else {
+                    if (currentPage < widget.imagesList.length - 1) {
+                      setState(() {
+                        currentPage++;
+                        timer.cancel();
+                        timer = Timer.periodic(const Duration(seconds: 3),
+                            (Timer t) {
+                          goToNext();
+                        });
+                      });
+                    }
+                  }
+                },
+                onTap: () {
+                  setState(() {
+                    currentPage = i;
+                    timer.cancel();
+                    timer =
+                        Timer.periodic(const Duration(seconds: 3), (Timer t) {
+                      goToNext();
+                    });
+                  });
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: i == currentPage
+                      ? MediaQuery.of(context).size.width * 0.75
+                      : i == 1
+                          ? MediaQuery.of(context).size.width * 0.15
+                          : i == currentPage - 1
+                              ? MediaQuery.of(context).size.width * 0.15
+                              : 0.h,
+                  height: 65.h,
+                  margin: i == currentPage
+                      ? i == 0
+                          ? EdgeInsets.only(right: 4.5.w)
+                          : EdgeInsets.only(left: 4.5.w)
+                      : EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(7.5.r)),
+                  ),
+                  child: Stack(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: widget.imagesList[i],
+                        height: 64.h,
+                        width: 121.w,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+        SizedBox(height: 5.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.imagesList.length; i++)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: i == currentPage ? 9.2.w : 2.5.h,
+                height: 2.5.h,
+                margin: i == widget.imagesList.length - 1
+                    ? EdgeInsets.zero
+                    : EdgeInsets.only(right: 2.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(22.r)),
+                  color: currentPage == i
+                      ? Colors.blue
+                      : Colors.blue.withOpacity(0.2),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
