@@ -1,9 +1,11 @@
 import 'package:fieldapp_functionality/arplugin/arplugin.dart';
+import 'package:fieldapp_functionality/firebase_options.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
 import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
 import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +17,9 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

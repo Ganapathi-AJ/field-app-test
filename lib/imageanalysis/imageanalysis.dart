@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:convert';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ImageAnalysisScreen extends StatefulWidget {
   @override
@@ -77,10 +79,6 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('Image Analysis'),
-      ),
       body: CameraScreen(),
 
       //  Padding(
@@ -182,12 +180,24 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _startListening() async {
-    bool available = await _speech.initialize();
+    bool available = await _speech.initialize(
+      onStatus: (status) => print('onStatus: $status'),
+      onError: (error) => print('onError: $error'),
+    );
+    print("Listening: $available");
     if (available) {
       setState(() => _isListening = true);
-      _speech.listen(onResult: (result) {
-        setState(() => _text = result.recognizedWords);
-      });
+      _speech.listen(
+        onResult: (result) {
+          print("Result: ${result.recognizedWords}");
+          setState(() => _text = result.recognizedWords);
+        },
+        listenFor: const Duration(seconds: 30),
+        pauseFor: const Duration(seconds: 5),
+        partialResults: true,
+        localeId: "en_US",
+        onSoundLevelChange: (level) => print("Sound level: $level"),
+      );
     }
   }
 
@@ -204,6 +214,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
     setState(() => _isListening = false);
     final imageUrl = await _uploadImageToFirebase(_imageFile!);
+
+    print("Image URL: $imageUrl");
+    print("Prompt: $_text");
 
     final response = await http.post(
       Uri.parse(
@@ -233,63 +246,102 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     if (_controller == null || !_controller!.value.isInitialized) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(
-      body: Stack(
-        children: [
-          CameraPreview(_controller!),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (_imageFile == null)
-                      IconButton(
-                        icon: const Icon(Icons.camera,
-                            size: 20, color: Colors.black),
-                        onPressed: _captureImage,
-                      ),
-                    const Flexible(
-                      child: Text("Place the product in front of the camera"),
-                    ),
-                    const SizedBox(width: 30),
-                    if (_imageFile != null)
-                      IconButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.blue[100],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              _isListening ? Icons.mic : Icons.mic_none,
-                              color: Colors.blue,
-                            ),
-                          ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            CameraPreview(_controller!),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 80,
+                width: double.infinity,
+                color: Colors.transparent,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(Icons.arrow_back_ios, color: Colors.white),
+                        const Text(
+                          'Image Analysis',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                        onPressed:
-                            _isListening ? _stopListening : _startListening,
-                      ),
-                  ],
+                        IconButton(
+                          icon: const Icon(Icons.done_rounded,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ResultsScreen(
+                                          analysisResult: "data['analysis']",
+                                        )));
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (_imageFile == null)
+                        IconButton(
+                          icon: const Icon(Icons.camera,
+                              size: 20, color: Colors.black),
+                          onPressed: _captureImage,
+                        ),
+                      const Flexible(
+                        child: Text("Place the product in front of the camera"),
+                      ),
+                      const SizedBox(width: 30),
+                      if (_imageFile != null)
+                        IconButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue[100],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                _isListening ? Icons.mic : Icons.mic_none,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          onPressed:
+                              _isListening ? _stopListening : _startListening,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -300,19 +352,244 @@ class ResultsScreen extends StatelessWidget {
 
   ResultsScreen({required this.analysisResult});
 
+  final data = {
+    "Memory and Storage": "12 GB RAM 24 GB",
+    "Processor": "M3 Chip",
+    "Dimensions and Weight": "152.8 mm x 72 mm x 8.5 mm ",
+    "Operating System": "Launched with iOS 15",
+    "Buttons and Ports": "USB Type-C 32",
+    "Authentication": "Fingerpring and Face Unlock",
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF6F7FA),
       appBar: AppBar(
-        title: Text('Analysis Result'),
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        title: const Text(
+          'Image Analysis',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text(
-          'Analysis: $analysisResult',
-          style: TextStyle(fontSize: 18),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildResultComponent(
+                  'Memory and Storage', data['Memory and Storage']!),
+              const Gap(10),
+              _buildResultComponent('Processor', data['Processor']!),
+              const Gap(10),
+              _buildResultComponent(
+                  'Dimensions and Weight', data['Dimensions and Weight']!),
+              const Gap(10),
+              _buildResultComponent(
+                  'Operating System', data['Operating System']!),
+              const Gap(10),
+              _buildResultComponent(
+                  'Buttons and Ports', data['Buttons and Ports']!),
+              const Gap(10),
+              _buildResultComponent('Authentication', data['Authentication']!),
+              const Gap(10),
+              CarouselWithArrows(
+                items: [_buildCarouselItem(), _buildCarouselItem()],
+              )
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+const primaryColor = Color(0xFF4285F4);
+
+Widget _buildResultComponent(String title, String value) {
+  return Container(
+    height: 80,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            decoration: BoxDecoration(
+              color: primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Icon(Icons.memory, color: primaryColor),
+            ),
+          ),
+          const Gap(10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 5),
+              FittedBox(
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildCarouselItem() {
+  return Container(
+    width: 330,
+    height: 500,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: const Padding(
+        padding: EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Display",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            Gap(10),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("• 6.1-inch Liquid Retina HD display"),
+                  Gap(5),
+                  Text("• True Tone"),
+                  Gap(5),
+                  Text("• Wide color (P3)"),
+                  Gap(5),
+                  Text("• Haptic Touch"),
+                  Gap(5),
+                  Text("• 625 nits max brightness (typical)"),
+                  Gap(5),
+                  Text("• Fingerprint-resistant oleophobic coating"),
+                  Gap(5),
+                  Text(
+                      "• Support for display of multiple languages and characters simultaneously"),
+                  Gap(5),
+                  Text("• 1400:1 contrast ratio (typical)"),
+                  Gap(5),
+                  Text("• 326 ppi"),
+                  Gap(5),
+                ],
+              ),
+            )
+          ],
+        )),
+  );
+}
+
+class CarouselWithArrows extends StatefulWidget {
+  final List<Widget> items;
+
+  CarouselWithArrows({required this.items});
+
+  @override
+  _CarouselWithArrowsState createState() => _CarouselWithArrowsState();
+}
+
+class _CarouselWithArrowsState extends State<CarouselWithArrows> {
+  int _currentIndex = 0;
+  CarouselSliderController carouselController = CarouselSliderController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            CarouselSlider(
+              items: widget.items,
+              carouselController: carouselController,
+              options: CarouselOptions(
+                height: 400,
+                viewportFraction: 0.8,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                enlargeCenterPage: true,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                    carouselController.animateToPage(index);
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 28.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_sharp,
+                    color: primaryColor,
+                  ),
+                  onPressed: _currentIndex > 0
+                      ? () {
+                          setState(() {
+                            _currentIndex--;
+                            carouselController.animateToPage(0);
+                          });
+                        }
+                      : null,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_forward_sharp,
+                    color: primaryColor,
+                  ),
+                  onPressed: _currentIndex < widget.items.length - 1
+                      ? () {
+                          setState(() {
+                            _currentIndex++;
+                            carouselController.animateToPage(1);
+                          });
+                        }
+                      : null,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
