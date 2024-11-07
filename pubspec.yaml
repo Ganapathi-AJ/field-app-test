@@ -2,7 +2,7 @@ name: fieldapp_functionality
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -46,11 +45,12 @@ dependencies:
   archive: ^3.6.1
   gap: ^3.0.1
   fl_chart: ^0.69.0
-  # arcore_flutter_plugin: ^0.1.0 
+  # arcore_flutter_plugin: ^0.1.0
   qr_code_scanner_plus: ^2.0.6
   camera: ^0.11.0+2
   speech_to_text: ^7.0.0
   mobile_scanner: ^6.0.2
+  carousel_slider: ^5.0.0
   flutter_inappwebview: ^6.1.5
   webview_flutter: ^4.10.0
   permission_handler: ^11.3.1
@@ -71,7 +71,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -81,7 +80,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
