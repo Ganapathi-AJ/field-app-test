@@ -1,6 +1,9 @@
 import 'package:fieldapp_functionality/inventory_management/inventory_management.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:gap/gap.dart';
+
+import '../sales/sales.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,43 +59,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500),
                             ),
-                            Text("Shashwat Mehrotra",
+                            Text("John Doeyea",
                                 style: TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.w500)),
                           ],
                         ),
                         const Spacer(),
                         Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0, horizontal: 8),
+                                    child: Text(
+                                      DateFormat('MMMM').format(DateTime
+                                          .now()), // Get the current month name
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 ),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 4.0, horizontal: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(13.0),
                                   child: Text(
-                                    "October",
-                                    style: TextStyle(color: Colors.white),
+                                    DateFormat('dd').format(
+                                        DateTime.now()), // Get the current day
                                   ),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(13.0),
-                                child: Text("08"),
-                              )
-                            ],
-                          ),
-                        )
+                                )
+                              ],
+                            ))
                       ],
                     ),
                     const Gap(20),
@@ -271,70 +278,80 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         )),
                     const Gap(20),
-                    Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return const SalesDashboard();
+                        }));
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            gradient: const LinearGradient(
+                                begin: Alignment.bottomRight,
+                                end: Alignment.topLeft,
+                                colors: [Color(0xffCCE3F8), Colors.white]),
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          gradient: const LinearGradient(
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topLeft,
-                              colors: [Color(0xffCCE3F8), Colors.white]),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Sales Dashboard",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Gap(30),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "150",
-                                          style: TextStyle(
-                                              fontSize: 29,
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        Gap(4),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              "Sales till Nov 1",
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                            SizedBox(
-                                              height: 9,
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                    height: 100,
-                                    child: Image.asset("assets/graph-bg.png"))
-                              ],
-                            ))),
+                          child: Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Sales Dashboard",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Gap(30),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "150",
+                                            style: TextStyle(
+                                                fontSize: 29,
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Gap(4),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "Sales till Nov 1",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              SizedBox(
+                                                height: 9,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                      height: 100,
+                                      child: Image.asset("assets/graph-bg.png"))
+                                ],
+                              ))),
+                    ),
                     Gap(10),
                     const Row(
                       children: [

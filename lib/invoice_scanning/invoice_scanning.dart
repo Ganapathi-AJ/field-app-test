@@ -8,10 +8,10 @@ class InvoiceScanningScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 246, 247, 250),
+      backgroundColor: const Color.fromARGB(255, 246, 247, 250),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 246, 247, 250),
-        title: Text('Invoice Scanning'),
+        backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+        title: const Text('Invoice Scanning'),
         centerTitle: true,
       ),
       body: Center(
@@ -27,17 +27,25 @@ class InvoiceScanningScreen extends StatelessWidget {
                   'assets/no_invoice_banner.png',
                   scale: 4.3,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 SizedBox(
                   width: 350,
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Row(
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: const Color.fromARGB(255, 54, 158, 255),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 100, vertical: 15)),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add_to_photos_outlined,
                           color: Colors.white,
                           size: 15,
@@ -51,17 +59,9 @@ class InvoiceScanningScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: Color.fromARGB(255, 54, 158, 255),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 100, vertical: 15)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
               },
@@ -75,7 +75,7 @@ class InvoiceScanningScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15)),
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -104,18 +104,18 @@ class InvoiceScanningScreen extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15)),
                       child: Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: Container(
                           width: double.infinity,
                           height: double.infinity,
                           decoration: BoxDecoration(
-                              gradient: RadialGradient(colors: [
+                              gradient: const RadialGradient(colors: [
                                 Color.fromARGB(46, 54, 158, 255),
                                 Color.fromARGB(37, 54, 158, 255),
                                 Color.fromARGB(20, 54, 158, 255),
                               ]),
                               borderRadius: BorderRadius.circular(15)),
-                          child: Column(
+                          child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -146,10 +146,10 @@ class InvoiceScanningScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -162,7 +162,7 @@ class InvoiceScanningScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               }
@@ -174,9 +174,9 @@ class InvoiceScanningScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
-        backgroundColor: Color.fromARGB(255, 54, 158, 255),
+        backgroundColor: const Color.fromARGB(255, 54, 158, 255),
         onPressed: () {},
-        child: SizedBox(
+        child: const SizedBox(
           width: 130,
           child: Row(
             children: [
