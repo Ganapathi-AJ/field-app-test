@@ -86,7 +86,15 @@ class _HomeState extends State<Home> {
                     return const SurveyForm();
                   }));
                 },
-                child: const Text("Survey Form"))
+                child: const Text("Survey Form")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const HomeScreen();
+                  }));
+                },
+                child: const Text("Home Screen")),
           ],
         ),
       ),

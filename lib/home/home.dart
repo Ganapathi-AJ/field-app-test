@@ -481,15 +481,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const Gap(20),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) {
-                              return InventoryManagementScreen();
-                            },
-                          ));
-                        },
-                        child: Text('Inventory Management'))
                   ],
                 ),
               ),
