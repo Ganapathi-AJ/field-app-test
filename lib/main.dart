@@ -38,66 +38,64 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
+      body: HomeScreen(),
 
-          //  HomeScreen()
-
-          Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const SalesDashboard();
-                  }));
-                },
-                child: const Text("Sales Dashboard")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const InvoiceScanningScreen();
-                  }));
-                },
-                child: const Text("Invoice Screen")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return QRBarcodeScannerScreen();
-                  }));
-                },
-                child: const Text("QR Screen")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return ImageAnalysisScreen();
-                  }));
-                },
-                child: const Text("Image Analysis")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const SurveyForm();
-                  }));
-                },
-                child: const Text("Survey Form")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const HomeScreen();
-                  }));
-                },
-                child: const Text("Home Screen")),
-          ],
-        ),
-      ),
+      //     Center(
+      //   child: Column(
+      //     mainAxisSize: MainAxisSize.max,
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return const SalesDashboard();
+      //             }));
+      //           },
+      //           child: const Text("Sales Dashboard")),
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return const InvoiceScanningScreen();
+      //             }));
+      //           },
+      //           child: const Text("Invoice Screen")),
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return QRBarcodeScannerScreen();
+      //             }));
+      //           },
+      //           child: const Text("QR Screen")),
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return ImageAnalysisScreen();
+      //             }));
+      //           },
+      //           child: const Text("Image Analysis")),
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return const SurveyForm();
+      //             }));
+      //           },
+      //           child: const Text("Survey Form")),
+      //       ElevatedButton(
+      //           onPressed: () {
+      //             Navigator.of(context)
+      //                 .push(MaterialPageRoute(builder: (context) {
+      //               return const HomeScreen();
+      //             }));
+      //           },
+      //           child: const Text("Home Screen")),
+      //     ],
+      //   ),
+      // ),
       // plugins.isNotEmpty
       //     ? ListView(
       //         children: plugins.keys.map((pluginName) {
