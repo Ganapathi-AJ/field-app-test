@@ -66,24 +66,20 @@ jobs:
       #     Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
       #     " >> lib/main.dart
 
-      # - name: Replace Sales in main.dart
-      #   if: contains(github.event.head_commit.message, 'Activate Sales')
-      #   run: |
-      #     sed -i '63,$d' lib/main.dart
-      #     echo "
-      #     Map<String, Widget> plugins = {'Sales': Sales(),};
-      #     " >> lib/main.dart
-
-      
-      - name: Add Plugin Based on Commit Message
-        if: contains(github.event.head_commit.message, 'Add plugin')
+      - name: Replace Text in invoice_scanning.dart
+        if: contains(github.event.head_commit.message, 'Activate Invoice')
         run: |
-          plugin_name=$(echo "${{ github.event.head_commit.message }}" | sed -n 's/^.*Add plugin \([^ ]*\).*$/\1/p')
-          if [ -n "$plugin_name" ]; then
-            flutter pub add "$plugin_name"
-          else
-            echo "No plugin specified in commit message."
-          fi
+          sed -i "s/title: const Text('Invoice Scanning')/title: const Text('Invoice Going')/" lib/invoice_scanning/invoice_scanning.dart
+
+      # - name: Add Plugin Based on Commit Message
+      #   if: contains(github.event.head_commit.message, 'Add plugin')
+      #   run: |
+      #     plugin_name=$(echo "${{ github.event.head_commit.message }}" | sed -n 's/^.*Add plugin \([^ ]*\).*$/\1/p')
+      #     if [ -n "$plugin_name" ]; then
+      #       flutter pub add "$plugin_name"
+      #     else
+      #       echo "No plugin specified in commit message."
+      #     fi
 
       - name: Commit and Push Changes
         run: |
