@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WelcomeType1 extends StatelessWidget {
   final String greeting;
@@ -17,11 +18,12 @@ class WelcomeType1 extends StatelessWidget {
                 greeting,
                 style: TextStyle(
                     color: Colors.blue,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
+                    fontSize: 7.sp,
+                    fontWeight: FontWeight.w600),
               ),
               Text(name,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                  style:
+                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w700)),
             ],
           ),
           const Spacer(),

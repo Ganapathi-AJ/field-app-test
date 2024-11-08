@@ -22,15 +22,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(182, 394),
+        designSize: const Size(166, 377),
         minTextAdapt: true,
         splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
-          return const MaterialApp(
+          return MaterialApp(
             title: 'Dynamic Plugin Loader',
             debugShowCheckedModeBanner: false,
-            home: Home(),
+            home: const Home(),
+            routes: {
+              '/invoice': (context) => const InvoiceScanningScreen(),
+              '/qr': (context) => QRBarcodeScannerScreen(),
+              '/image': (context) => ImageAnalysisScreen(),
+              '/survey': (context) => const SurveyForm(),
+            },
           );
         });
   }

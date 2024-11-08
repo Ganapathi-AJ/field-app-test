@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarouselType1 extends StatefulWidget {
   const CarouselType1(
-      {super.key, required this.imagesList, this.autoPlay = true});
-  final List<String> imagesList;
+      {super.key, required this.children, this.autoPlay = true});
+  final List<Map<String, dynamic>> children;
   final bool autoPlay;
 
   @override
@@ -41,12 +42,18 @@ class _CarouselType1State extends State<CarouselType1> {
                   });
                 },
               ),
-              items: widget.imagesList.map((i) {
+              items: widget.children.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return CachedNetworkImage(
-                      imageUrl: i,
-                      height: 52.h,
+                    return ScalingButton(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(i['ontap-route']);
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl: i['imageUrl'] ?? '',
+                        fit: BoxFit.fitHeight,
+                        height: 52.h,
+                      ),
                     );
                   },
                 );
@@ -56,12 +63,12 @@ class _CarouselType1State extends State<CarouselType1> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (int i = 0; i < widget.imagesList.length; i++)
+            for (int i = 0; i < widget.children.length; i++)
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: i == currentPage ? 9.2.w : 2.5.h,
                 height: 2.5.h,
-                margin: i == widget.imagesList.length - 1
+                margin: i == widget.children.length - 1
                     ? EdgeInsets.zero
                     : EdgeInsets.only(right: 2.w),
                 decoration: BoxDecoration(
@@ -81,8 +88,8 @@ class _CarouselType1State extends State<CarouselType1> {
 
 class CarouselType2 extends StatefulWidget {
   const CarouselType2(
-      {super.key, required this.imagesList, this.autoPlay = true});
-  final List<String> imagesList;
+      {super.key, required this.children, this.autoPlay = true});
+  final List<Map<String, dynamic>> children;
   final bool autoPlay;
 
   @override
@@ -105,7 +112,7 @@ class _CarouselType2State extends State<CarouselType2> {
     if (!widget.autoPlay) {
       return;
     }
-    if (currentPage < widget.imagesList.length - 1) {
+    if (currentPage < widget.children.length - 1) {
       currentPage++;
     } else {
       currentPage = 0;
@@ -127,7 +134,7 @@ class _CarouselType2State extends State<CarouselType2> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (int i = 0; i < widget.imagesList.length; i++)
+            for (int i = 0; i < widget.children.length; i++)
               GestureDetector(
                 onHorizontalDragEnd: (details) {
                   if (details.primaryVelocity! > 0) {
@@ -142,7 +149,7 @@ class _CarouselType2State extends State<CarouselType2> {
                       });
                     }
                   } else {
-                    if (currentPage < widget.imagesList.length - 1) {
+                    if (currentPage < widget.children.length - 1) {
                       setState(() {
                         currentPage++;
                         timer.cancel();
@@ -155,6 +162,10 @@ class _CarouselType2State extends State<CarouselType2> {
                   }
                 },
                 onTap: () {
+                  if (currentPage == i) {
+                    Navigator.of(context)
+                        .pushNamed(widget.children[i]['ontap-route']);
+                  }
                   setState(() {
                     currentPage = i;
                     timer.cancel();
@@ -186,7 +197,7 @@ class _CarouselType2State extends State<CarouselType2> {
                   child: Stack(
                     children: [
                       CachedNetworkImage(
-                        imageUrl: widget.imagesList[i],
+                        imageUrl: widget.children[i]['imageUrl'] ?? '',
                         height: 64.h,
                         width: 121.w,
                         fit: BoxFit.fitHeight,
@@ -201,12 +212,12 @@ class _CarouselType2State extends State<CarouselType2> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (int i = 0; i < widget.imagesList.length; i++)
+            for (int i = 0; i < widget.children.length; i++)
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: i == currentPage ? 9.2.w : 2.5.h,
                 height: 2.5.h,
-                margin: i == widget.imagesList.length - 1
+                margin: i == widget.children.length - 1
                     ? EdgeInsets.zero
                     : EdgeInsets.only(right: 2.w),
                 decoration: BoxDecoration(
