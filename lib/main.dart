@@ -1,7 +1,9 @@
 import 'package:fieldapp_functionality/firebase_options.dart';
 import 'package:fieldapp_functionality/home/home.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
+import 'package:fieldapp_functionality/inventory_management/inventory_management.dart';
 import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
+import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
 import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:fieldapp_functionality/sales/sales.dart';
 
@@ -32,12 +34,16 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Dynamic Plugin Loader',
             debugShowCheckedModeBanner: false,
-            home: const Home(),
+            home: const HomeScreen(),
             routes: {
               '/invoice': (context) => const InvoiceScanningScreen(),
               '/qr': (context) => QRBarcodeScannerScreen(),
               '/image': (context) => ImageAnalysisScreen(),
               '/survey': (context) => const SurveyForm(),
+              '/sales': (context) => const SalesDashboard(),
+              '/home': (context) => const HomeScreen(),
+              '/inventory': (context) => const InventoryManagementScreen(),
+              '/knowledge': (context) => const KnowledgeHub(),
             },
           );
         });

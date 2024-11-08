@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fieldapp_functionality/global/constants.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
+import 'package:fieldapp_functionality/global/widgets/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -157,16 +159,28 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
     }
 
-    return currentWidget;
+    return Padding(
+        padding: EdgeInsets.only(bottom: 0.015.sh), child: currentWidget);
   }
 
   @override
   Widget build(BuildContext context) {
+    final sh = MediaQuery.of(context).size.height;
+    final sw = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xffF7F7F7),
       body: Stack(
         alignment: Alignment.center,
         children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            child: FieldImage(
+              'assets/corner-leaf.png',
+              width: 0.5 * sw,
+              height: 0.3 * sh,
+            ),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
@@ -174,13 +188,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
-                    const Gap(20),
+                    SizedBox(height: MediaQuery.of(context).padding.top),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.notifications_outlined,
+                          size: 0.03 * sh,
+                        ),
+                        const SizedBox(width: 10),
+                        FieldImage(
+                          'assets/Image-60.png',
+                          width: 0.03 * sh,
+                          height: 0.03 * sh,
+                        ),
+                        const SizedBox(width: 15),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     WelcomeType1(greeting: 'Good Morning', name: 'John Doe'),
-                    const Gap(20),
                     if (isLoading)
                       const Center(child: CircularProgressIndicator())
                     else
                       ...layoutData.map((data) => returnTheWidget(data)),
+                    SizedBox(height: 0.1.sh),
                   ],
                 ),
               ),

@@ -85,6 +85,7 @@ class _PageFooterState extends State<PageFooter> {
                 Text(
                   'Home',
                   style: TextStyle(
+                      fontSize: 5.sp,
                       color: currentIndex == 0 ? Colors.blue : Colors.grey,
                       fontWeight: currentIndex == 0
                           ? FontWeight.w500
@@ -102,9 +103,6 @@ class _PageFooterState extends State<PageFooter> {
                     null) {
                   Navigator.of(context).pushNamed(
                       widget.footerData?['children']?[i]?['ontap-route']);
-                  setState(() {
-                    currentIndex = i + 1;
-                  });
                 }
               },
               child: Column(
@@ -148,6 +146,7 @@ class _PageFooterState extends State<PageFooter> {
                     widget.footerData?['children'][i]['title'] ?? '',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                        fontSize: 5.sp,
                         fontWeight: currentIndex == i + 1
                             ? FontWeight.w500
                             : FontWeight.w400,

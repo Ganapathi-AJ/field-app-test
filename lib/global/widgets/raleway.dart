@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -51,33 +52,17 @@ class RalewayType1 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),
                   child: Container(
-                    width: 180,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              children.elementAt(index)['imageUrl']),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(children.elementAt(index)['title'],
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400)),
-                              const Icon(Icons.arrow_forward_ios, size: 15)
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                      height: 120,
+                      // decoration: BoxDecoration(
+                      //   image: DecorationImage(
+                      //       image: NetworkImage(
+                      //           children.elementAt(index)['imageUrl']),
+                      //       fit: BoxFit.fitHeight),
+                      // ),
+                      child: CachedNetworkImage(
+                        imageUrl: children.elementAt(index)['imageUrl'],
+                        fit: BoxFit.fitHeight,
+                      )),
                 ),
               );
             },
@@ -141,31 +126,9 @@ class RalewayType2 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),
                   child: Container(
-                    width: 170,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              children.elementAt(index)['imageUrl']),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(children.elementAt(index)['title'],
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400)),
-                              const Icon(Icons.arrow_forward_ios, size: 15)
-                            ],
-                          )
-                        ],
-                      ),
+                    child: CachedNetworkImage(
+                      imageUrl: children.elementAt(index)['imageUrl'],
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),

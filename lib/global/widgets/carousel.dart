@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +17,33 @@ class CarouselType1 extends StatefulWidget {
 
 class _CarouselType1State extends State<CarouselType1> {
   int currentPage = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    if (widget.autoPlay) {
+      Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+        if (currentPage < widget.children.length - 1) {
+          currentPage++;
+        } else {
+          currentPage = 0;
+        }
+        _pageController.animateToPage(
+          currentPage,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.fastOutSlowIn,
+        );
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,41 +51,32 @@ class _CarouselType1State extends State<CarouselType1> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-            height: 52.h,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: 52.h,
-                viewportFraction: 1,
-                enableInfiniteScroll: true,
-                autoPlay: widget.autoPlay,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    currentPage = index;
-                  });
+          height: 0.15.sh,
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            itemCount: widget.children.length,
+            itemBuilder: (context, index) {
+              final i = widget.children[index];
+              return ScalingButton(
+                onTap: () {
+                  Navigator.of(context).pushNamed(i['ontap-route']);
                 },
-              ),
-              items: widget.children.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return ScalingButton(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(i['ontap-route']);
-                      },
-                      child: CachedNetworkImage(
-                        imageUrl: i['imageUrl'] ?? '',
-                        fit: BoxFit.fitHeight,
-                        height: 52.h,
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            )),
-        SizedBox(height: 5.h),
+                child: CachedNetworkImage(
+                  imageUrl: i['imageUrl'] ?? '',
+                  height: 0.15.sh,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fitWidth,
+                ),
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 4.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

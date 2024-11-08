@@ -21,8 +21,7 @@ class BannerType1 extends StatelessWidget {
       },
       child: FieldImage(
         imageUrl,
-        fit: BoxFit.fitHeight,
-        height: 32.h,
+        fit: BoxFit.fitWidth,
         width: double.maxFinite,
       ),
     );
@@ -43,8 +42,7 @@ class BannerType2 extends StatelessWidget {
       },
       child: FieldImage(
         imageUrl,
-        fit: BoxFit.fitHeight,
-        height: 51.5.h,
+        fit: BoxFit.fitWidth,
         width: double.maxFinite,
       ),
     );
@@ -66,8 +64,7 @@ class BannerType3 extends StatelessWidget {
       },
       child: FieldImage(
         imageUrl,
-        fit: BoxFit.fitHeight,
-        height: 81.5.h,
+        fit: BoxFit.fitWidth,
         width: double.maxFinite,
       ),
     );
