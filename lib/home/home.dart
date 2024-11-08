@@ -12,10 +12,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isLoading = true;
+
   @override
   void initState() {
-    fetchData();
     super.initState();
+    fetchData();
   }
 
   List<Map<String, dynamic>> layoutData = [];
@@ -43,13 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
       print("Error fetching data: $e");
     }
     print('layoutData:' + layoutData.toString());
+    setState(() {
+      isLoading = false;
+    });
 
     return dataList;
   }
 
   Widget returnTheWidget(Map mapData) {
-    String widgetType = mapData['widget-type'];
-    int typeNumber = mapData['widget-number'];
+    String widgetType = mapData['widget-type'] ?? '';
+    int typeNumber = mapData['widget-number'] ?? 0;
     Widget currentWidget = const Gap(10);
 
     switch (widgetType) {
@@ -91,31 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(15),
             child: Column(
               children: [
+                WelcomeType1(greeting: 'Good Morning', name: 'John Doe'),
                 const Gap(20),
-                WelcomeType1(greeting: 'Good Evening', name: 'John Doe'),
-                const CarouselType2(
-                  imagesList: [
-                    "https://i.imgur.com/2nCt3Sbl.jpg",
-                    "https://i.imgur.com/2nCt3Sbl.jpg",
-                    "https://i.imgur.com/2nCt3Sbl.jpg"
-                  ],
-                ),
-                RalewayType1(
-                  heading: 'Hi',
-                  redirection: '/ds',
-                  children: const [
-                    {
-                      'title': 'Inventory Management',
-                      'imageUrl':
-                          'https://lh5.googleusercontent.com/y4yP2D0a3H1jPA2IaocvGaM93Ou3i4-ZTNPDMJLQJeGBxJpTcilS6rpn1bbDFX51NTG5731vPuZwxf52Yr1dEwxcBpktlGbfirJ36e1eExKEIE0nJtjaxYm2rGqIbGctJCJ7Zn4B'
-                    },
-                    {
-                      'title': 'Inventory Management',
-                      'imageUrl':
-                          'https://lh5.googleusercontent.com/y4yP2D0a3H1jPA2IaocvGaM93Ou3i4-ZTNPDMJLQJeGBxJpTcilS6rpn1bbDFX51NTG5731vPuZwxf52Yr1dEwxcBpktlGbfirJ36e1eExKEIE0nJtjaxYm2rGqIbGctJCJ7Zn4B'
-                    }
-                  ],
-                )
+                if (isLoading)
+                  const CircularProgressIndicator()
+                else
+                  for (int i = 0; i < layoutData.length; i++)
+                    returnTheWidget(layoutData[i]),
               ],
             ),
           ),
