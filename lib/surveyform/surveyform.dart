@@ -588,7 +588,7 @@ class _SureveyFormNextState extends State<SureveyFormNext> {
               //   return const FormScreen();
               // }));
             },
-            child: Text("Create New", style: TextStyle(color: Colors.white)),
+            child: const Text("Create New", style: TextStyle(color: Colors.white)),
           ),
         ),
       ),
@@ -743,7 +743,7 @@ class _FinalFormState extends State<FinalForm> {
                         child: TextField(
                           controller: TextEditingController(
                               text: "  Work More on english"),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "   Survey for performance",
                             hintStyle: TextStyle(
                                 color: Color(0xff74787E),
@@ -757,7 +757,7 @@ class _FinalFormState extends State<FinalForm> {
                             const BoxDecoration(color: Color(0xffF8F8F8)),
                         child: TextField(
                           controller: TextEditingController(text: "  Nah!"),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "   Survey for performance",
                             hintStyle: TextStyle(
                                 color: Color(0xff74787E),

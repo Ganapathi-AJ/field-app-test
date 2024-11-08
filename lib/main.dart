@@ -10,6 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'videocall/videocall.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -53,64 +55,74 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeScreen(),
+      body:
 
-      //     Center(
-      //   child: Column(
-      //     mainAxisSize: MainAxisSize.max,
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return const SalesDashboard();
-      //             }));
-      //           },
-      //           child: const Text("Sales Dashboard")),
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return const InvoiceScanningScreen();
-      //             }));
-      //           },
-      //           child: const Text("Invoice Screen")),
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return QRBarcodeScannerScreen();
-      //             }));
-      //           },
-      //           child: const Text("QR Screen")),
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return ImageAnalysisScreen();
-      //             }));
-      //           },
-      //           child: const Text("Image Analysis")),
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return const SurveyForm();
-      //             }));
-      //           },
-      //           child: const Text("Survey Form")),
-      //       ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context)
-      //                 .push(MaterialPageRoute(builder: (context) {
-      //               return const HomeScreen();
-      //             }));
-      //           },
-      //           child: const Text("Home Screen")),
-      //     ],
-      //   ),
-      // ),
+          // HomeScreen(),
+
+          Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const SalesDashboard();
+                  }));
+                },
+                child: const Text("Sales Dashboard")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const InvoiceScanningScreen();
+                  }));
+                },
+                child: const Text("Invoice Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return QRBarcodeScannerScreen();
+                  }));
+                },
+                child: const Text("QR Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return ImageAnalysisScreen();
+                  }));
+                },
+                child: const Text("Image Analysis")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const SurveyForm();
+                  }));
+                },
+                child: const Text("Survey Form")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const HomeScreen();
+                  }));
+                },
+                child: const Text("Home Screen")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return VideoCall();
+                  }));
+                },
+                child: const Text("Video Call")),
+          ],
+        ),
+      ),
       // plugins.isNotEmpty
       //     ? ListView(
       //         children: plugins.keys.map((pluginName) {
@@ -133,7 +145,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-
-// Map<String, Widget> plugins = {'Sales': Sales(),};
-

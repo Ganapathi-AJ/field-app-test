@@ -33,10 +33,10 @@ jobs:
       #       channel: 'stable'
       #       architecture: x64    
 
-      # - name: Unzip Attendance Plugin
-      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
-      #   run: |
-      #     unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
+      - name: Unzip Attendance Plugin 
+        if: contains(github.event.head_commit.message, 'Activate Attendance')
+        run: |  
+          unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
 
       # - name: Unzip Sales Plugin
       #   if: contains(github.event.head_commit.message, 'Activate Sales')
@@ -58,13 +58,13 @@ jobs:
       #   run: |
       #     echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
 
-      # - name: Replace Attendace in main.dart
-      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
-      #   run: |
-      #     sed -i '63,$d' lib/main.dart
-      #     echo "
-      #     Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
-      #     " >> lib/main.dart
+      - name: Replace Attendace in main.dart
+        if: contains(github.event.head_commit.message, 'Activate Attendance')
+        run: |
+          sed -i '63,$d' lib/data-json.dart
+          echo "
+          Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
+          " >> lib/main.dart
 
       - name: Replace Text in invoice_scanning.dart
         if: contains(github.event.head_commit.message, 'Activate Invoice')
