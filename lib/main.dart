@@ -1,3 +1,4 @@
+import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/firebase_options.dart';
 import 'package:fieldapp_functionality/home/home.dart';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
             home: const HomeScreen(),
             routes: {
               '/invoice': (context) => InvoiceScanningScreen(),
+              '/ar-module': (context) => const UnityDemoScreen(),
               '/qr': (context) => QRBarcodeScannerScreen(),
               '/image': (context) => ImageAnalysisScreen(),
               '/survey': (context) => const SurveyForm(),
@@ -82,6 +84,22 @@ class _HomeState extends State<Home> {
                   }));
                 },
                 child: const Text("Sales Dashboard")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return UnityDemoScreen();
+                  }));
+                },
+                child: const Text("Unity Demo")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return UnityDemoScreen();
+                  }));
+                },
+                child: const Text("Unity Demo")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)

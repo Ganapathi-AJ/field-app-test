@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fieldapp_functionality/global/constants.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
-import 'package:fieldapp_functionality/global/widgets/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -18,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   Widget pageFooter = const SizedBox();
   Widget pageHeader = const Gap(10);
+  int pageNumber = 0;
+
+  changeScreenTo(int screenNumber) {}
 
   Map<String, dynamic>? headerData;
   Map<String, dynamic>? footerData;

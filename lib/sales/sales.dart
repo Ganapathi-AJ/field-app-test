@@ -19,10 +19,6 @@ class _SalesDashboardState extends State<SalesDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffF6F7FA),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent,
-        ),
         body: SingleChildScrollView(
           child: Column(
             children: [

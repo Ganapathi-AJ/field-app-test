@@ -40,11 +40,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.4.1
-  flutter_downloader: ^1.11.8
+  # flutter_downloader: ^1.11.8
   flutter_inappwebview: ^6.1.5
   flutter_phoenix: ^1.1.1
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.14
+  flutter_unity_widget: ^2022.2.0
   flutter_widget_from_html_core: ^0.15.2
   gap: ^3.0.1
   http: ^1.2.2
