@@ -353,7 +353,7 @@ class CustomBottomNavBar extends StatelessWidget {
     final sw = MediaQuery.of(context).size.width;
 
     return Container(
-      height: sh * 0.1,
+      height: sh * 0.11,
       padding: EdgeInsets.symmetric(horizontal: 10.67.w, vertical: 4.17.h),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
