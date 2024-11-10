@@ -8,17 +8,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BannerType1 extends StatelessWidget {
   final String imageUrl;
-  final String redirection;
-  const BannerType1(
-      {super.key, required this.imageUrl, required this.redirection});
+  final VoidCallback onTap;
+
+  const BannerType1({super.key, required this.imageUrl, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final sh = MediaQuery.of(context).size.height;
     return ScalingButton(
-      onTap: () {
-        Navigator.of(context).pushNamed(redirection);
-      },
+      onTap: onTap,
       child: FieldImage(
         imageUrl,
         fit: BoxFit.fitWidth,
@@ -30,16 +28,13 @@ class BannerType1 extends StatelessWidget {
 
 class BannerType2 extends StatelessWidget {
   final String imageUrl;
-  final String redirection;
-  const BannerType2(
-      {super.key, required this.imageUrl, required this.redirection});
+  final VoidCallback onTap;
+  const BannerType2({super.key, required this.imageUrl, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ScalingButton(
-      onTap: () {
-        Navigator.of(context).pushNamed(redirection);
-      },
+      onTap: onTap,
       child: FieldImage(
         imageUrl,
         fit: BoxFit.fitWidth,
@@ -51,17 +46,14 @@ class BannerType2 extends StatelessWidget {
 
 class BannerType3 extends StatelessWidget {
   final String imageUrl;
-  final String redirection;
+  final VoidCallback onTap;
 
-  const BannerType3(
-      {super.key, required this.imageUrl, required this.redirection});
+  const BannerType3({super.key, required this.imageUrl, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ScalingButton(
-      onTap: () {
-        Navigator.of(context).pushNamed(redirection);
-      },
+      onTap: onTap,
       child: FieldImage(
         imageUrl,
         fit: BoxFit.fitWidth,

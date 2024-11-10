@@ -6,11 +6,13 @@ class RalewayType1 extends StatelessWidget {
   final String heading;
   final List<Map<String, dynamic>> children;
   final String? headerLogo;
+  final Function onTap;
   const RalewayType1(
       {super.key,
       required this.heading,
       required this.children,
-      this.headerLogo});
+      this.headerLogo,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +48,7 @@ class RalewayType1 extends StatelessWidget {
             itemBuilder: (context, index) {
               return ScalingButton(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(children.elementAt(index)['ontap-route']);
+                  onTap(children.elementAt(index)['ontap-route']);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),
@@ -77,11 +78,13 @@ class RalewayType2 extends StatelessWidget {
   final String heading;
   final List<Map<String, dynamic>> children;
   final String? headerLogo;
+  final Function onTap;
   const RalewayType2(
       {super.key,
       required this.heading,
       required this.children,
-      this.headerLogo});
+      this.headerLogo,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +123,7 @@ class RalewayType2 extends StatelessWidget {
             itemBuilder: (context, index) {
               return ScalingButton(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(children.elementAt(index)['ontap-route']);
+                  onTap(children.elementAt(index)['ontap-route']);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),

@@ -19,6 +19,7 @@ class _PageFooterState extends State<PageFooter> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Container(
+      height: sh * 0.1,
       padding: EdgeInsets.symmetric(horizontal: 10.67.w, vertical: 4.17.h),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(

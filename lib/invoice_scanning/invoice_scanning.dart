@@ -7,7 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:path_provider/path_provider.dart';
 
-const primaryColor = Color(0xff369EFF);
+const primaryColorInvoice = Color(0xff369EFF);
 
 class InvoiceScanningScreen extends StatelessWidget {
   InvoiceScanningScreen({super.key});
@@ -64,13 +64,13 @@ class InvoiceScanningScreen extends StatelessWidget {
                               Icon(
                                 Symbols.arrow_back_ios,
                                 size: 0.03 * sw,
-                                color: primaryColor,
+                                color: primaryColorInvoice,
                               ),
                               Text(
                                 'Back',
                                 style: TextStyle(
                                   fontSize: 0.03 * sw,
-                                  color: primaryColor,
+                                  color: primaryColorInvoice,
                                 ),
                               ),
                             ],
@@ -388,7 +388,7 @@ class _CaptureInvoiceState extends State<CaptureInvoice> {
                       children: [
                         IconButton(
                           icon: const Icon(Symbols.arrow_back_ios,
-                              color: primaryColor),
+                              color: primaryColorInvoice),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -427,7 +427,7 @@ class _CaptureInvoiceState extends State<CaptureInvoice> {
                           onTap: () {},
                           child: Container(
                             decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.1),
+                              color: primaryColorInvoice.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: const Padding(
@@ -437,12 +437,12 @@ class _CaptureInvoiceState extends State<CaptureInvoice> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(Symbols.camera_rounded,
-                                      size: 20, color: primaryColor),
+                                      size: 20, color: primaryColorInvoice),
                                   Gap(10),
                                   Text(
                                     "Capture",
                                     style: TextStyle(
-                                        color: primaryColor,
+                                        color: primaryColorInvoice,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   )

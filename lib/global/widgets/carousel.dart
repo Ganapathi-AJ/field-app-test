@@ -7,9 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarouselType1 extends StatefulWidget {
   const CarouselType1(
-      {super.key, required this.children, this.autoPlay = true});
+      {super.key,
+      required this.children,
+      this.autoPlay = true,
+      required this.onTap});
   final List<Map<String, dynamic>> children;
   final bool autoPlay;
+  final Function onTap;
 
   @override
   State<CarouselType1> createState() => _CarouselType1State();
@@ -64,7 +68,7 @@ class _CarouselType1State extends State<CarouselType1> {
               final i = widget.children[index];
               return ScalingButton(
                 onTap: () {
-                  Navigator.of(context).pushNamed(i['ontap-route']);
+                  widget.onTap(i['ontap-route']);
                 },
                 child: CachedNetworkImage(
                   imageUrl: i['imageUrl'] ?? '',
@@ -105,9 +109,13 @@ class _CarouselType1State extends State<CarouselType1> {
 
 class CarouselType2 extends StatefulWidget {
   const CarouselType2(
-      {super.key, required this.children, this.autoPlay = true});
+      {super.key,
+      required this.children,
+      this.autoPlay = true,
+      required this.onTap});
   final List<Map<String, dynamic>> children;
   final bool autoPlay;
+  final Function onTap;
 
   @override
   State<CarouselType2> createState() => _CarouselType2State();
@@ -180,8 +188,7 @@ class _CarouselType2State extends State<CarouselType2> {
                 },
                 onTap: () {
                   if (currentPage == i) {
-                    Navigator.of(context)
-                        .pushNamed(widget.children[i]['ontap-route']);
+                    widget.onTap(widget.children[i]['ontap-route']);
                   }
                   setState(() {
                     currentPage = i;

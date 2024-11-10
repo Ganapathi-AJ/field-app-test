@@ -29,51 +29,22 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            'Image Analysis',
+            style: TextStyle(
+              fontSize: 15,
+              color: primaryColor,
+            ),
+          ),
+          centerTitle: true,
+        ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: sw * 0.2,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Symbols.arrow_back_ios,
-                              size: 0.03 * sw,
-                              color: primaryColor,
-                            ),
-                            Text(
-                              'Back',
-                              style: TextStyle(
-                                fontSize: 0.03 * sw,
-                                color: primaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Text("Image Analysis",
-                        style: TextStyle(
-                          fontSize: 0.03 * sw,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        )),
-                    SizedBox(
-                      width: 0.2 * sw,
-                    ),
-                  ],
-                ),
-              ),
+              Row(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

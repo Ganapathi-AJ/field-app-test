@@ -1,14 +1,7 @@
 import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/firebase_options.dart';
 import 'package:fieldapp_functionality/home/home.dart';
-import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
-import 'package:fieldapp_functionality/inventory_management/inventory_management.dart';
-import 'package:fieldapp_functionality/invoice_scanning/invoice_scanning.dart';
-import 'package:fieldapp_functionality/knowledge-hub/knowledge-hub.dart';
-import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
-import 'package:fieldapp_functionality/sales/sales.dart';
-
-import 'package:fieldapp_functionality/surveyform/surveyform.dart';
+import 'package:fieldapp_functionality/plugins.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
