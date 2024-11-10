@@ -69,181 +69,594 @@ class KnowledgeHub extends StatefulWidget {
 class _KnowledgeHubState extends State<KnowledgeHub> {
   @override
   Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: const Color(0xffF6F7FA),
-        appBar: AppBar(
-          backgroundColor: const Color(0xffF6F7FA),
-        ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 3.0, left: 13.0, right: 13.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search for topics lessons..',
-                        suffixIcon: Icon(
-                          Symbols.search,
-                          color: Colors.grey.shade400,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: sw * 0.2,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Symbols.arrow_back_ios,
+                                size: 0.03 * sw,
+                                color: Color(0xff4285F4),
+                              ),
+                              Text(
+                                'Back',
+                                style: TextStyle(
+                                  fontSize: 0.03 * sw,
+                                  color: Color(0xff4285F4),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        hintStyle: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300),
-                        border: InputBorder.none,
+                      ),
+                      Text("Knowledge Hub",
+                          style: TextStyle(
+                            fontSize: 0.03 * sw,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          )),
+                      SizedBox(
+                        width: 0.2 * sw,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 3.0, left: 13.0, right: 13.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search for topics lessons..',
+                          suffixIcon: Icon(
+                            Symbols.search,
+                            color: Colors.grey.shade400,
+                          ),
+                          hintStyle: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Row(
-                  children: [
-                    const Text(
-                      "Feature Lessons",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const FeatureLessons()));
-                      },
-                      child: const Row(
-                        children: [
-                          Text(
-                            "View All",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Icon(Symbols.arrow_forward_ios,
-                              size: 12, color: Colors.blue)
-                        ],
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Feature Lessons",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        width: 70.w,
-                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/imgs/${index % 2 == 0 ? 1 : 2}.png'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                          ),
-                          border: Border.all(color: Colors.white, width: 2),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Stack(
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const FeatureLessons()));
+                        },
+                        child: const Row(
                           children: [
-                            Positioned(
-                              bottom: 0,
-                              child: Container(
-                                width: 70.w,
-                                height: 40.sp,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
-                                  ),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    stops: [0.0, 0.9],
-                                    colors: [
-                                      Colors.white.withOpacity(0.1),
-                                      Colors.white.withOpacity(1),
-                                    ],
+                            Text(
+                              "View All",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(Symbols.arrow_forward_ios,
+                                size: 12, color: Colors.blue)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          width: 70.w,
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/imgs/${index % 2 == 0 ? 1 : 2}.png'),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
+                            ),
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                bottom: 0,
+                                child: Container(
+                                  width: 70.w,
+                                  height: 40.sp,
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0),
+                                    ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      stops: [0.0, 0.9],
+                                      colors: [
+                                        Colors.white.withOpacity(0.1),
+                                        Colors.white.withOpacity(1),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: EdgeInsets.all(4.sp),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "How to Navigate quickly for Store visits?",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 5.sp),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ));
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Explore & Learn",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ExploreLearn()));
+                        },
+                        child: const Row(
+                          children: [
+                            Text(
+                              "View All",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(4.sp),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "How to Navigate quickly for Store visits?",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 5.sp),
+                            Icon(Symbols.arrow_forward_ios,
+                                size: 12, color: Colors.blue)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    itemCount: 3,
+                    itemBuilder: (ctx, index) {
+                      final topic = topics[index];
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.sp, vertical: 2.sp),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade200,
+                                blurRadius: 10.0,
+                                spreadRadius: 1.0,
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.blue.withOpacity(0.1),
                                   ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Icon(
+                                      topic['icon'] as IconData,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      topic['titel'].toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                    ),
+                                    Text(
+                                      topic['desc'].toString(),
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12),
+                                    ),
+                                    const Gap(10),
+                                  ],
+                                ),
+                              ),
+                              Icon(Icons.arrow_forward_ios_rounded, size: 7.sp),
+                              Gap(4.sp)
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+}
+
+class FeatureLessons extends StatefulWidget {
+  const FeatureLessons({super.key});
+
+  @override
+  State<FeatureLessons> createState() => _FeatureLessonsState();
+}
+
+class _FeatureLessonsState extends State<FeatureLessons> {
+  @override
+  Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
+    return Scaffold(
+        backgroundColor: const Color(0xffF6F7FA),
+        body: SingleChildScrollView(
+            child: SafeArea(
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: sw * 0.2,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Symbols.arrow_back_ios,
+                            size: 0.03 * sw,
+                            color: Color(0xff4285F4),
+                          ),
+                          Text(
+                            'Back',
+                            style: TextStyle(
+                              fontSize: 0.03 * sw,
+                              color: Color(0xff4285F4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search for topics lessons..',
+                      suffixIcon: Icon(
+                        Symbols.search,
+                        color: Colors.grey.shade400,
+                      ),
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (ctx, index) {
+                  final topic = topics[index];
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
+                    child: Container(
+                      height: 50.sp,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade200,
+                            blurRadius: 10.0,
+                            spreadRadius: 1.0,
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(4.sp),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                width: 45.w,
+                                height: 45.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                ),
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.sp),
+                                      child: Image.asset(
+                                        'assets/imgs/${index % 2 == 0 ? 1 : 2}.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 2.sp,
+                                      bottom: 2.sp,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Symbols.play_lesson,
+                                            size: 8.sp,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                            Gap(3.sp),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        topic['titel'].toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14),
+                                      ),
+                                      Text(
+                                        topic['desc'].toString(),
+                                        style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 12),
+                                      ),
+                                      const Gap(10),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ArticleLesson()));
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Learn More",
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 6.sp,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Gap(3.sp),
+                                            Icon(Symbols.arrow_forward_ios,
+                                                size: 5.sp, color: Colors.blue)
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
                           ],
-                        ));
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Row(
-                  children: [
-                    const Text(
-                      "Explore & Learn",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
+                        ),
+                      ),
                     ),
-                    const Spacer(),
-                    GestureDetector(
+                  );
+                },
+              ),
+            )
+          ]),
+        )));
+  }
+}
+
+class ExploreLearn extends StatefulWidget {
+  const ExploreLearn({super.key});
+
+  @override
+  State<ExploreLearn> createState() => _ExploreLearnState();
+}
+
+class _ExploreLearnState extends State<ExploreLearn> {
+  @override
+  Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
+    return Scaffold(
+        backgroundColor: const Color(0xffF6F7FA),
+        body: SingleChildScrollView(
+            child: SafeArea(
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: sw * 0.2,
+                    child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ExploreLearn()));
+                        Navigator.pop(context);
                       },
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Text(
-                            "View All",
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
+                          Icon(
+                            Symbols.arrow_back_ios,
+                            size: 0.03 * sw,
+                            color: Color(0xff4285F4),
                           ),
-                          Icon(Symbols.arrow_forward_ios,
-                              size: 12, color: Colors.blue)
+                          Text(
+                            'Back',
+                            style: TextStyle(
+                              fontSize: 0.03 * sw,
+                              color: Color(0xff4285F4),
+                            ),
+                          ),
                         ],
                       ),
-                    )
-                  ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search for topics lessons..',
+                      suffixIcon: Icon(
+                        Symbols.search,
+                        color: Colors.grey.shade400,
+                      ),
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300),
+                      border: InputBorder.none,
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  itemCount: 3,
-                  itemBuilder: (ctx, index) {
-                    final topic = topics[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 5.sp, vertical: 2.sp),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: ListView.builder(
+                itemCount: 6,
+                itemBuilder: (ctx, index) {
+                  final topic = topics[index];
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ArticelLearn()));
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -297,320 +710,17 @@ class _KnowledgeHubState extends State<KnowledgeHub> {
                                 ],
                               ),
                             ),
-                            Icon(Icons.arrow_forward_ios_rounded, size: 7.sp),
                             Gap(4.sp)
                           ],
                         ),
                       ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-}
-
-class FeatureLessons extends StatefulWidget {
-  const FeatureLessons({super.key});
-
-  @override
-  State<FeatureLessons> createState() => _FeatureLessonsState();
-}
-
-class _FeatureLessonsState extends State<FeatureLessons> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color(0xffF6F7FA),
-        appBar: AppBar(
-          backgroundColor: const Color(0xffF6F7FA),
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  );
+                },
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search for topics lessons..',
-                    suffixIcon: Icon(
-                      Symbols.search,
-                      color: Colors.grey.shade400,
-                    ),
-                    hintStyle: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w300),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (ctx, index) {
-                final topic = topics[index];
-                return Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
-                  child: Container(
-                    height: 50.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade200,
-                          blurRadius: 10.0,
-                          spreadRadius: 1.0,
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(4.sp),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              width: 45.w,
-                              height: 45.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.sp),
-                              ),
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.sp),
-                                    child: Image.asset(
-                                      'assets/imgs/${index % 2 == 0 ? 1 : 2}.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 2.sp,
-                                    bottom: 2.sp,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Symbols.play_lesson,
-                                          size: 8.sp,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          Gap(3.sp),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      topic['titel'].toString(),
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14),
-                                    ),
-                                    Text(
-                                      topic['desc'].toString(),
-                                      style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 12),
-                                    ),
-                                    const Gap(10),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ArticleLesson()));
-                                      },
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Learn More",
-                                            style: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 6.sp,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Gap(3.sp),
-                                          Icon(Symbols.arrow_forward_ios,
-                                              size: 5.sp, color: Colors.blue)
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
-        ])));
-  }
-}
-
-class ExploreLearn extends StatefulWidget {
-  const ExploreLearn({super.key});
-
-  @override
-  State<ExploreLearn> createState() => _ExploreLearnState();
-}
-
-class _ExploreLearnState extends State<ExploreLearn> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color(0xffF6F7FA),
-        appBar: AppBar(
-          backgroundColor: const Color(0xffF6F7FA),
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search for topics lessons..',
-                    suffixIcon: Icon(
-                      Symbols.search,
-                      color: Colors.grey.shade400,
-                    ),
-                    hintStyle: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w300),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: ListView.builder(
-              itemCount: 6,
-              itemBuilder: (ctx, index) {
-                final topic = topics[index];
-                return Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ArticelLearn()));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade200,
-                            blurRadius: 10.0,
-                            spreadRadius: 1.0,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue.withOpacity(0.1),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: Icon(
-                                  topic['icon'] as IconData,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  topic['titel'].toString(),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  topic['desc'].toString(),
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12),
-                                ),
-                                const Gap(10),
-                              ],
-                            ),
-                          ),
-                          Gap(4.sp)
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
-        ])));
+            )
+          ]),
+        )));
   }
 }
 

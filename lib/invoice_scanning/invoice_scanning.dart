@@ -35,179 +35,224 @@ class InvoiceScanningScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 247, 250),
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 246, 247, 250),
-        title: const Text('Invoice Scanning'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (noInvoiceAvl) ...{
-                Image.asset(
-                  'assets/no_invoice_banner.png',
-                  scale: 4.3,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                SizedBox(
-                  width: 350,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CaptureInvoice()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor:
-                            const Color.fromARGB(255, 54, 158, 255),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 100, vertical: 15)),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Symbols.document_scanner,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Scan Invoice',
-                          style: TextStyle(fontSize: 17),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-              },
-              if (!noInvoiceAvl) ...{
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 110,
-                      height: 160,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Color.fromARGB(23, 26, 137, 255),
-                            child: Icon(
-                              Symbols.add,
-                              color: Color.fromARGB(255, 54, 158, 255),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Add\nInvoice',
-                            style: TextStyle(fontSize: 16),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 110,
-                      height: 160,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                              gradient: const RadialGradient(colors: [
-                                Color.fromARGB(46, 54, 158, 255),
-                                Color.fromARGB(37, 54, 158, 255),
-                                Color.fromARGB(20, 54, 158, 255),
-                              ]),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: sw * 0.2,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
                             children: [
+                              Icon(
+                                Symbols.arrow_back_ios,
+                                size: 0.03 * sw,
+                                color: primaryColor,
+                              ),
                               Text(
-                                '36',
+                                'Back',
                                 style: TextStyle(
-                                    fontSize: 40,
-                                    color: Color.fromARGB(255, 54, 158, 255)),
+                                  fontSize: 0.03 * sw,
+                                  color: primaryColor,
+                                ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Saved\nInvoices",
-                                textAlign: TextAlign.center,
-                              )
                             ],
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: 110,
-                      height: 160,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                    )
-                  ],
+                      Text("Invoice Scanning",
+                          style: TextStyle(
+                            fontSize: 0.03 * sw,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          )),
+                      SizedBox(
+                        width: 0.2 * sw,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: 20,
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Saved Invoices",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                if (noInvoiceAvl) ...{
+                  Image.asset(
+                    'assets/no_invoice_banner.png',
+                    scale: 4.3,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  SizedBox(
+                    width: 350,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CaptureInvoice()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor:
+                              const Color.fromARGB(255, 54, 158, 255),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 100, vertical: 15)),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Symbols.document_scanner,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Scan Invoice',
+                            style: TextStyle(fontSize: 17),
+                          )
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "View all",
-                          style: TextStyle(fontSize: 14, color: Colors.blue),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                },
+                if (!noInvoiceAvl) ...{
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      Container(
+                        width: 110,
+                        height: 160,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Color.fromARGB(23, 26, 137, 255),
+                              child: Icon(
+                                Symbols.add,
+                                color: Color.fromARGB(255, 54, 158, 255),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              'Add\nInvoice',
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
                         ),
-                        Icon(Icons.arrow_forward_ios,
-                            size: 15, color: Colors.blue)
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-              }
-            ],
+                      ),
+                      Container(
+                        width: 110,
+                        height: 160,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                                gradient: const RadialGradient(colors: [
+                                  Color.fromARGB(46, 54, 158, 255),
+                                  Color.fromARGB(37, 54, 158, 255),
+                                  Color.fromARGB(20, 54, 158, 255),
+                                ]),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '36',
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      color: Color.fromARGB(255, 54, 158, 255)),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Saved\nInvoices",
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 110,
+                        height: 160,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      SizedBox(),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Saved Invoices",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "View all",
+                            style: TextStyle(fontSize: 14, color: Colors.blue),
+                          ),
+                          Icon(Icons.arrow_forward_ios,
+                              size: 15, color: Colors.blue)
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                }
+              ],
+            ),
           ),
         ),
       ),

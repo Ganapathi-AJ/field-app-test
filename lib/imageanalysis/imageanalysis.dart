@@ -25,6 +25,8 @@ class ImageAnalysisScreen extends StatefulWidget {
 class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
   @override
   Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -36,35 +38,39 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Symbols.arrow_back_ios,
-                            size: 17,
-                            color: primaryColor,
-                          ),
-                          Text(
-                            'Back',
-                            style: TextStyle(
-                              fontSize: 15,
+                    SizedBox(
+                      width: sw * 0.2,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Symbols.arrow_back_ios,
+                              size: 0.03 * sw,
                               color: primaryColor,
                             ),
-                          ),
-                        ],
+                            Text(
+                              'Back',
+                              style: TextStyle(
+                                fontSize: 0.03 * sw,
+                                color: primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const Text("Image Analysis",
-                        style: const TextStyle(
-                          fontSize: 18,
+                    Text("Image Analysis",
+                        style: TextStyle(
+                          fontSize: 0.03 * sw,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         )),
-                    const SizedBox(),
-                    const SizedBox()
+                    SizedBox(
+                      width: 0.2 * sw,
+                    ),
                   ],
                 ),
               ),
@@ -72,18 +78,18 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                      width: 300,
+                      width: 0.6 * sw,
                       child: Image.asset("assets/img-analysis.png")),
                   const Gap(20),
-                  const Text(
+                  Text(
                     "Use camera to click the image of the\nproduct",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 0.03 * sw,
                       color: Color(0xff45484F),
                     ),
                   ),
-                  const Gap(10),
+                  const Gap(20),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -95,15 +101,16 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(16)),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 24.0, vertical: 18),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               "Open Camera",
                               style: TextStyle(
+                                  fontSize: 0.027 * sw,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -111,6 +118,7 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                             Icon(
                               Symbols.camera_alt,
                               color: Colors.white,
+                              size: 0.04 * sw,
                             )
                           ],
                         ),
