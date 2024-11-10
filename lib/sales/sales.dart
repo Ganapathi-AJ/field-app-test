@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:fieldapp_functionality/imageanalysis/imageanalysis.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class SalesDashboard extends StatefulWidget {
   const SalesDashboard({super.key});
@@ -28,14 +30,14 @@ class _SalesDashboardState extends State<SalesDashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InfoContainer(
-                    icon: Icons.bar_chart_rounded,
+                    icon: Symbols.bar_chart_rounded,
                     title: 'Total Sales',
                     value: '128',
                     subtitle: Text('Till 1 Nov',
                         style: TextStyle(fontWeight: FontWeight.w300)),
                   ),
                   InfoContainer(
-                    icon: Icons.campaign_rounded,
+                    icon: Icons.campaign,
                     title: 'Campaigns',
                     value: '- -',
                     subtitle: Text('Till 1 Nov',
@@ -48,14 +50,14 @@ class _SalesDashboardState extends State<SalesDashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const InfoContainer(
-                    icon: Icons.warehouse_outlined,
+                    icon: Symbols.warehouse_rounded,
                     title: 'Field Visits',
                     value: '15',
                     subtitle: Text('Till 1 Nov',
                         style: TextStyle(fontWeight: FontWeight.w300)),
                   ),
                   InfoContainer(
-                      icon: Icons.emoji_events_outlined,
+                      icon: Symbols.rewarded_ads,
                       title: 'Rewards',
                       value: '48',
                       subtitle: Row(
@@ -65,7 +67,8 @@ class _SalesDashboardState extends State<SalesDashboard> {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.done,
+                                    Symbols.editor_choice,
+                                    size: 7.sp,
                                     color: Colors.amber[400],
                                   ),
                                   const Gap(3),
@@ -76,7 +79,8 @@ class _SalesDashboardState extends State<SalesDashboard> {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.stars_rounded,
+                                    Symbols.stars_rounded,
+                                    size: 7.sp,
                                     color: Colors.green[400],
                                   ),
                                   const Gap(3),
@@ -111,7 +115,7 @@ class _SalesDashboardState extends State<SalesDashboard> {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.star_outline,
+                              const Icon(Symbols.family_star,
                                   color: Color(0xff1890FF)),
                               const Gap(5),
                               RichText(
@@ -125,14 +129,14 @@ class _SalesDashboardState extends State<SalesDashboard> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: '75%',
+                                      text: '72%',
                                       style: TextStyle(
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.bold,
                                         color: Color(0xff1890FF),
                                       ),
                                     ),
                                     TextSpan(
-                                      text: ' of your peers',
+                                      text: ' of your people.',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
@@ -180,7 +184,7 @@ class _SalesDashboardState extends State<SalesDashboard> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.bar_chart_rounded, color: Colors.white),
+                  Icon(Symbols.bar_chart_rounded, color: Colors.white),
                   Gap(5),
                   Text("Add Sales", style: TextStyle(color: Colors.white)),
                 ],
@@ -195,169 +199,256 @@ Future<dynamic> SalesSheet(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
+    barrierColor: Colors.transparent,
     isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(17.sp)),
+    ),
     builder: (BuildContext ctx) {
       return DraggableScrollableSheet(
         expand: false,
+        initialChildSize: 0.9,
+        maxChildSize: 0.93,
         builder: (BuildContext context, ScrollController scrollController) {
           return SingleChildScrollView(
             controller: scrollController,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text("Submit Sales", style: TextStyle(fontSize: 18)),
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Container(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey.shade300,
+                ),
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(17.sp)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("Submit Sales",
+                        style: TextStyle(
+                            fontSize: 8.sp, fontWeight: FontWeight.w500)),
+                    Container(
                       height: 2,
                       width: MediaQuery.of(context).size.width * 0.9,
                       color: Colors.grey[300],
                       margin: const EdgeInsets.symmetric(vertical: 10),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Retailer Name"),
-                      Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffF8F8F8)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "   Enter Retailer Name",
-                            hintStyle: TextStyle(color: Color(0xff74787E)),
+                    Gap(5.sp),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Retailer Name",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 239, 239, 239)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "   Enter Retailer Name",
+                              hintStyle: TextStyle(
+                                  color: const Color(0xff74787E),
+                                  fontSize: 6.sp),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const Gap(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Date of Sale*",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 239, 239, 239)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "   eg- 06/06/2024",
+                              hintStyle: TextStyle(
+                                  color: const Color(0xff74787E),
+                                  fontSize: 6.sp),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const Gap(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Store Name*",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 239, 239, 239)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: "   Enter Store",
+                                hintStyle: TextStyle(
+                                    color: const Color(0xff74787E),
+                                    fontSize: 6.sp)),
+                          ),
+                        )
+                      ],
+                    ),
+                    const Gap(20),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Product Serial Number",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 90.w,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 239, 239, 239)),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      hintText: "   Enter 20 digit Number",
+                                      hintStyle: TextStyle(
+                                          color: const Color(0xff74787E),
+                                          fontSize: 6.sp)),
+                                ),
+                              ),
+                              Gap(4.sp),
+                              Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff4285F4)
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 9.sp, vertical: 4.sp),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.barcode_reader,
+                                            size: 7.sp,
+                                            color: const Color(0xff4285F4),
+                                          ),
+                                          Gap(2.sp),
+                                          const Text("Scan",
+                                              style: TextStyle(
+                                                  color: Color(0xff4285F4))),
+                                        ],
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    const Gap(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Additional Info",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 239, 239, 239)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: "   Enter additional info",
+                                hintStyle: TextStyle(
+                                    color: const Color(0xff74787E),
+                                    fontSize: 6.sp)),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  const Gap(20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Date of Sale*"),
-                      Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffF8F8F8)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "   eg- 06/06/2024",
-                            hintStyle: TextStyle(color: Color(0xff74787E)),
+                      ],
+                    ),
+                    const Gap(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Quantity",
+                            style: TextStyle(
+                                fontSize: 7.sp, fontWeight: FontWeight.w600)),
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 239, 239, 239)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: "   Enter the quantity",
+                                hintStyle: TextStyle(
+                                    color: const Color(0xff74787E),
+                                    fontSize: 6.sp)),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Store Name*"),
-                      Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffF8F8F8)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "   Enter Store",
-                            hintStyle: TextStyle(color: Color(0xff74787E)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Product Serial Number"),
-                      Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffF8F8F8)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "   Enter 20 digit Number",
-                            hintStyle: TextStyle(color: Color(0xff74787E)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Quantity"),
-                      Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffF8F8F8)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: "   Enter the quantity",
-                            hintStyle: TextStyle(color: Color(0xff74787E)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(ctx);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 50),
-                            child: Text(
-                              "Reset",
-                              style: TextStyle(color: Colors.grey.shade400),
+                        )
+                      ],
+                    ),
+                    const Gap(20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(ctx);
+                          },
+                          child: Container(
+                            width: 70.w,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade400),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5.sp),
+                                child: Text(
+                                  "Reset",
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(ctx);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 50),
-                            child: Text("Save & Next",
-                                style: TextStyle(color: Colors.white)),
+                        Gap(4.sp),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(ctx);
+                          },
+                          child: Container(
+                            width: 70.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff4285F4),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 5.2.sp),
+                                child: const Text("Save & Next",
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     // Handle save action
-                      //   },
-                      //   child: const Text('Save'),
-                      // ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     Navigator.pop(ctx);
-                      //   },
-                      //   child: const Text('Cancel'),
-                      // ),
-                    ],
-                  ),
-                
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -384,6 +475,7 @@ class InfoContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 0.45.sw,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -403,6 +495,7 @@ class InfoContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -410,9 +503,10 @@ class InfoContainer extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(4.sp),
                     child: Icon(
                       icon,
+                      size: 8.sp,
                       color: const Color(0xFF1890FF),
                     ),
                   ),
@@ -420,8 +514,8 @@ class InfoContainer extends StatelessWidget {
                 const Gap(10),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 7.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -433,12 +527,13 @@ class InfoContainer extends StatelessWidget {
               children: [
                 Text(
                   value,
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: const Color(0xff333333),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Gap(10),
+                Gap(6.w),
                 subtitle,
               ],
             ),
@@ -449,8 +544,15 @@ class InfoContainer extends StatelessWidget {
   }
 }
 
-class WeeklyOverviewChart extends StatelessWidget {
+class WeeklyOverviewChart extends StatefulWidget {
   WeeklyOverviewChart({Key? key}) : super(key: key);
+
+  @override
+  _WeeklyOverviewChartState createState() => _WeeklyOverviewChartState();
+}
+
+class _WeeklyOverviewChartState extends State<WeeklyOverviewChart> {
+  String selectedPeriod = 'Weekly';
 
   // Generate random data for current and previous week
   final List<Map<String, dynamic>> weeklyData = List.generate(7, (index) {
@@ -520,11 +622,11 @@ class WeeklyOverviewChart extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Overview',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   // Time period selector
@@ -535,9 +637,10 @@ class WeeklyOverviewChart extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        _buildTimeButton('Today', false),
-                        _buildTimeButton('Weekly', true),
-                        _buildTimeButton('Monthly', false),
+                        _buildTimeButton('Today', selectedPeriod == 'Today'),
+                        _buildTimeButton('Weekly', selectedPeriod == 'Weekly'),
+                        _buildTimeButton(
+                            'Monthly', selectedPeriod == 'Monthly'),
                       ],
                     ),
                   ),
@@ -619,19 +722,48 @@ class WeeklyOverviewChart extends StatelessWidget {
   }
 
   Widget _buildTimeButton(String text, bool isSelected) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.white : Colors.transparent,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: isSelected ? Colors.black : Colors.grey[600],
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            fontSize: 11),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedPeriod = text;
+          // Update the chart data based on the selected period
+          // For simplicity, we are not changing the data here
+          // Update the chart data based on the selected period
+          if (selectedPeriod == 'Today') {
+            // Generate random data for today
+            weeklyData.forEach((data) {
+              data['salesTarget'] = Random().nextInt(300) + 100;
+              data['achievedTarget'] = Random().nextInt(300) + 100;
+              data['isHoliday'] = false;
+            });
+          } else if (selectedPeriod == 'Weekly') {
+            // Generate random data for the week
+            weeklyData.forEach((data) {
+              data['salesTarget'] = Random().nextInt(300) + 100;
+              data['achievedTarget'] = Random().nextInt(300) + 100;
+              data['isHoliday'] = data['day'] == 'Sat' || data['day'] == 'Sun';
+            });
+          } else if (selectedPeriod == 'Monthly') {
+            // Generate random data for the month
+            weeklyData.forEach((data) {
+              data['salesTarget'] = Random().nextInt(300) + 100;
+              data['achievedTarget'] = Random().nextInt(300) + 100;
+              data['isHoliday'] = false;
+            });
+          }
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 6.sp, vertical: 1.9.sp),
+        margin: EdgeInsets.symmetric(vertical: 0.8.sp, horizontal: 0.8.sp),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.white : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 4.sp, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

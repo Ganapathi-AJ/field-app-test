@@ -1,6 +1,7 @@
 import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class PageFooter extends StatefulWidget {
   const PageFooter({super.key, this.footerData});
@@ -74,7 +75,7 @@ class _PageFooterState extends State<PageFooter> {
                       child: Align(
                         alignment: Alignment(0, 0.9),
                         child: Icon(
-                          Icons.home_rounded,
+                          Symbols.home_rounded,
                           size: sh * 0.03,
                           color: currentIndex == 0 ? Colors.blue : Colors.grey,
                         ),

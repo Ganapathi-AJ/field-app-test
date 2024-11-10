@@ -12,7 +12,7 @@ class _QRBarcodeScannerScreenState extends State<QRBarcodeScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('QR & Barcode Scanner')),
+      appBar: AppBar(title: const Text('QR & Barcode Scanner')),
       body: Column(
         children: [
           Expanded(
@@ -35,7 +35,7 @@ class _QRBarcodeScannerScreenState extends State<QRBarcodeScannerScreen> {
                 scanResult != null
                     ? 'Result: $scanResult'
                     : 'Scan a QR code or Barcode',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           ),

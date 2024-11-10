@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:material_symbols_icons/symbols.dart';
 // import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +43,7 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.arrow_back_ios,
+                            Symbols.arrow_back_ios,
                             size: 17,
                             color: primaryColor,
                           ),
@@ -108,7 +109,7 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                             ),
                             Gap(10),
                             Icon(
-                              Icons.camera_alt,
+                              Symbols.camera_alt,
                               color: Colors.white,
                             )
                           ],
@@ -342,7 +343,8 @@ class _CameraScreenState extends State<CameraScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+                          icon:
+                              Icon(Symbols.arrow_back_ios, color: primaryColor),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -389,7 +391,7 @@ class _CameraScreenState extends State<CameraScreen> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.camera_rounded,
+                                  Icon(Symbols.camera_rounded,
                                       size: 20, color: primaryColor),
                                   const Gap(10),
                                   Text(
@@ -420,7 +422,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.mic,
+                                          Icon(Symbols.mic,
                                               size: 20, color: primaryColor),
                                           const Gap(10),
                                           Text(
@@ -491,7 +493,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                               child: const Padding(
                                                 padding: EdgeInsets.all(13.0),
                                                 child: Icon(
-                                                  Icons.arrow_forward,
+                                                  Symbols.arrow_forward,
                                                   size: 17,
                                                   color: Colors.white,
                                                 ),
@@ -523,7 +525,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       //   ),
                       // if (_imageFile != null)
                       //   IconButton(
-                      //     icon: const Icon(Icons.arrow_forward_ios,
+                      //     icon: const Icon(Symbols.arrow_forward_ios,
                       //         color: Colors.blue),
                       //     onPressed: () {
                       //       // Navigator.push(
@@ -608,7 +610,7 @@ class _ResultScreenState extends State<ResultScreen> {
           foregroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: primaryColor),
+            icon: Icon(Symbols.arrow_back_ios, color: primaryColor),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -636,7 +638,7 @@ class _ResultScreenState extends State<ResultScreen> {
               //         child: Row(
               //           children: [
               //             Icon(
-              //               Icons.arrow_back_ios,
+              //               Symbols.arrow_back_ios,
               //               size: 17,
               //               color: primaryColor,
               //             ),
@@ -710,7 +712,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Icon(
-                                Icons.auto_awesome,
+                                Symbols.auto_awesome,
                                 color: primaryColor,
                               ),
                             ),
@@ -823,7 +825,7 @@ class _ResultScreenState extends State<ResultScreen> {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.camera_alt,
+            Symbols.camera_alt,
             color: Colors.white,
           ),
         ));

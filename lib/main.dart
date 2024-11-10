@@ -34,9 +34,13 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Dynamic Plugin Loader',
             debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                useMaterial3: true,
+                scaffoldBackgroundColor: Colors.white,
+                fontFamily: 'Urbanist'),
             home: const HomeScreen(),
             routes: {
-              '/invoice': (context) => const InvoiceScanningScreen(),
+              '/invoice': (context) => InvoiceScanningScreen(),
               '/qr': (context) => QRBarcodeScannerScreen(),
               '/image': (context) => ImageAnalysisScreen(),
               '/survey': (context) => const SurveyForm(),
@@ -82,7 +86,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return const InvoiceScanningScreen();
+                    return InvoiceScanningScreen();
                   }));
                 },
                 child: const Text("Invoice Screen")),
@@ -134,7 +138,7 @@ class _HomeState extends State<Home> {
       //         children: plugins.keys.map((pluginName) {
       //           return ListTile(
       //             title: Text(pluginName),
-      //             trailing: const Icon(Icons.arrow_forward),
+      //             trailing: const Icon(Symbols.arrow_forward),
       //             onTap: () {
       //               Navigator.push(
       //                 context,

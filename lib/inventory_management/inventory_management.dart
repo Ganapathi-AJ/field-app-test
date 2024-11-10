@@ -2,6 +2,7 @@ import 'package:fieldapp_functionality/data/inventory_data.dart';
 import 'package:fieldapp_functionality/qr_scanner/qr_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class InventoryManagementScreen extends StatelessWidget {
   const InventoryManagementScreen({super.key});
@@ -74,7 +75,7 @@ class InventoryManagementScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            child: Icon(Icons.abc),
+                            child: Icon(Symbols.abc),
                           ),
                           Gap(10),
                           Column(
@@ -96,7 +97,7 @@ class InventoryManagementScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.location_on_outlined),
+                                      Icon(Symbols.location_on),
                                       Text(
                                         currentItem['location'],
                                       ),
@@ -105,7 +106,7 @@ class InventoryManagementScreen extends StatelessWidget {
                                   Gap(3),
                                   Row(
                                     children: [
-                                      Icon(Icons.watch_later_outlined),
+                                      Icon(Symbols.watch_later_rounded),
                                       Text(
                                         currentItem['time'],
                                       ),

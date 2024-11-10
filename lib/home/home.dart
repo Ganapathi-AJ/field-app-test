@@ -5,6 +5,7 @@ import 'package:fieldapp_functionality/global/widgets/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -193,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(
-                          Icons.notifications_outlined,
+                          Symbols.notifications,
                           size: 0.03 * sh,
                         ),
                         const SizedBox(width: 10),
