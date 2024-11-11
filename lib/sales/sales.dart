@@ -20,198 +20,168 @@ class _SalesDashboardState extends State<SalesDashboard> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+          iconTheme: IconThemeData(
+            color: const Color.fromRGBO(54, 158, 255, 1),
+          ),
+          title: Text('Sales Dashboard',
+              style: TextStyle(
+                fontSize: 0.04 * sw,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              )),
+          centerTitle: true,
+        ),
         backgroundColor: const Color(0xffF6F7FA),
         body: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: sw * 0.2,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InfoContainer(
+                    icon: Symbols.bar_chart_rounded,
+                    title: 'Total Sales',
+                    value: '128',
+                    subtitle: Text('Till 1 Nov',
+                        style: TextStyle(fontWeight: FontWeight.w300)),
+                  ),
+                  InfoContainer(
+                    icon: Icons.campaign,
+                    title: 'Campaigns',
+                    value: '- -',
+                    subtitle: Text('Till 1 Nov',
+                        style: TextStyle(fontWeight: FontWeight.w300)),
+                  ),
+                ],
+              ),
+              const Gap(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const InfoContainer(
+                    icon: Symbols.warehouse_rounded,
+                    title: 'Field Visits',
+                    value: '15',
+                    subtitle: Text('Till 1 Nov',
+                        style: TextStyle(fontWeight: FontWeight.w300)),
+                  ),
+                  InfoContainer(
+                      icon: Symbols.rewarded_ads,
+                      title: 'Rewards',
+                      value: '48',
+                      subtitle: Row(
+                        children: [
+                          Row(
                             children: [
-                              Icon(
-                                Symbols.arrow_back_ios,
-                                size: 0.03 * sw,
-                                color: primaryColor,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Symbols.editor_choice,
+                                    size: 7.sp,
+                                    color: Colors.amber[400],
+                                  ),
+                                  const Gap(3),
+                                  const Text('11')
+                                ],
                               ),
-                              Text(
-                                'Back',
-                                style: TextStyle(
-                                  fontSize: 0.03 * sw,
-                                  color: primaryColor,
+                              const Gap(5),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Symbols.stars_rounded,
+                                    size: 7.sp,
+                                    color: Colors.green[400],
+                                  ),
+                                  const Gap(3),
+                                  const Text('05')
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                ],
+              ),
+              const Gap(20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        const Color(0xFF1890FF).withOpacity(0.07),
+                        const Color(0xffABD1F3).withOpacity(0.12)
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      child: Row(
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Symbols.family_star,
+                                  color: Color(0xff1890FF)),
+                              const Gap(5),
+                              RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'You are doing better than ',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '72%',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff1890FF),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' of your people.',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      Text("Sales Dashboard",
-                          style: TextStyle(
-                            fontSize: 0.03 * sw,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          )),
-                      SizedBox(
-                        width: 0.2 * sw,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InfoContainer(
-                      icon: Symbols.bar_chart_rounded,
-                      title: 'Total Sales',
-                      value: '128',
-                      subtitle: Text('Till 1 Nov',
-                          style: TextStyle(fontWeight: FontWeight.w300)),
-                    ),
-                    InfoContainer(
-                      icon: Icons.campaign,
-                      title: 'Campaigns',
-                      value: '- -',
-                      subtitle: Text('Till 1 Nov',
-                          style: TextStyle(fontWeight: FontWeight.w300)),
-                    ),
-                  ],
-                ),
-                const Gap(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const InfoContainer(
-                      icon: Symbols.warehouse_rounded,
-                      title: 'Field Visits',
-                      value: '15',
-                      subtitle: Text('Till 1 Nov',
-                          style: TextStyle(fontWeight: FontWeight.w300)),
-                    ),
-                    InfoContainer(
-                        icon: Symbols.rewarded_ads,
-                        title: 'Rewards',
-                        value: '48',
-                        subtitle: Row(
-                          children: [
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Symbols.editor_choice,
-                                      size: 7.sp,
-                                      color: Colors.amber[400],
-                                    ),
-                                    const Gap(3),
-                                    const Text('11')
-                                  ],
-                                ),
-                                const Gap(5),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Symbols.stars_rounded,
-                                      size: 7.sp,
-                                      color: Colors.green[400],
-                                    ),
-                                    const Gap(3),
-                                    const Text('05')
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
-                  ],
-                ),
-                const Gap(20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          const Color(0xFF1890FF).withOpacity(0.07),
-                          const Color(0xffABD1F3).withOpacity(0.12)
                         ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Symbols.family_star,
-                                    color: Color(0xff1890FF)),
-                                const Gap(5),
-                                RichText(
-                                  text: const TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'You are doing better than ',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: '72%',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff1890FF),
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' of your people.',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                  ),
+                      )),
                 ),
-                const Gap(20),
-                WeeklyOverviewChart(),
-                const Gap(10),
-                // Legend
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildLegendItem('Sales Target', Colors.blue),
-                    const SizedBox(width: 16),
-                    _buildLegendItem(
-                        'Achieved Target', Colors.blue.withOpacity(0.3)),
-                    const SizedBox(width: 16),
-                    _buildLegendItem('Holiday', Colors.grey),
-                  ],
-                ),
-                const Gap(50)
-              ],
-            ),
+              ),
+              const Gap(20),
+              WeeklyOverviewChart(),
+              const Gap(10),
+              // Legend
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildLegendItem('Sales Target', Colors.blue),
+                  const SizedBox(width: 16),
+                  _buildLegendItem(
+                      'Achieved Target', Colors.blue.withOpacity(0.3)),
+                  const SizedBox(width: 16),
+                  _buildLegendItem('Holiday', Colors.grey),
+                ],
+              ),
+              const Gap(50)
+            ],
           ),
         ),
         floatingActionButton: GestureDetector(

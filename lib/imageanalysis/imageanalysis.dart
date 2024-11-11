@@ -28,16 +28,18 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 246, 247, 250),
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Image Analysis',
-            style: TextStyle(
-              fontSize: 15,
-              color: primaryColor,
-            ),
+          backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+          iconTheme: IconThemeData(
+            color: const Color.fromRGBO(54, 158, 255, 1),
           ),
+          title: Text('Sales Dashboard',
+              style: TextStyle(
+                fontSize: 0.04 * sw,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              )),
           centerTitle: true,
         ),
         body: SafeArea(

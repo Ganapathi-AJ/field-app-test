@@ -91,7 +91,7 @@ class _SurveyFormState extends State<SurveyForm> {
                           ],
                         ),
                       ),
-                      const Text("Knowledge Hub",
+                      const Text("Survey Forms",
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -101,6 +101,9 @@ class _SurveyFormState extends State<SurveyForm> {
                       const SizedBox()
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 ListView.builder(
                     shrinkWrap: true,

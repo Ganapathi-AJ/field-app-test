@@ -138,7 +138,7 @@ class _PageFooterState extends State<PageFooter> {
                             width: sh * 0.03,
                             color: currentIndex == i + 1
                                 ? Colors.blue
-                                : Colors.grey,
+                                : Colors.grey.shade100,
                           ),
                         ),
                       ),

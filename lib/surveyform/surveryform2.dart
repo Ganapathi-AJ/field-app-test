@@ -18,6 +18,9 @@ class _FinalFormState extends State<FinalForm> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const Text('Survey Form'),
+        iconTheme: IconThemeData(
+          color: const Color.fromRGBO(54, 158, 255, 1),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

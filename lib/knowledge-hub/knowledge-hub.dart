@@ -72,52 +72,24 @@ class _KnowledgeHubState extends State<KnowledgeHub> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+          iconTheme: IconThemeData(
+            color: const Color.fromRGBO(54, 158, 255, 1),
+          ),
+          title: Text('Knowledge Hub',
+              style: TextStyle(
+                fontSize: 0.043 * sw,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              )),
+          centerTitle: true,
+        ),
         backgroundColor: const Color(0xffF6F7FA),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: sw * 0.2,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                Symbols.arrow_back_ios,
-                                size: 0.03 * sw,
-                                color: Color(0xff4285F4),
-                              ),
-                              Text(
-                                'Back',
-                                style: TextStyle(
-                                  fontSize: 0.03 * sw,
-                                  color: Color(0xff4285F4),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Text("Knowledge Hub",
-                          style: TextStyle(
-                            fontSize: 0.03 * sw,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          )),
-                      SizedBox(
-                        width: 0.2 * sw,
-                      ),
-                    ],
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Container(
@@ -367,203 +339,181 @@ class _FeatureLessonsState extends State<FeatureLessons> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+          iconTheme: IconThemeData(
+            color: const Color.fromRGBO(54, 158, 255, 1),
+          ),
+          //iconTheme: IconThemeData(color: const Color.fromRGBO(54, 158, 255, 1), ),
+          title: Text('Feature Lessons',
+              style: TextStyle(
+                fontSize: 0.04 * sw,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              )),
+          centerTitle: true,
+        ),
         backgroundColor: const Color(0xffF6F7FA),
         body: SingleChildScrollView(
-            child: SafeArea(
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: sw * 0.2,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Symbols.arrow_back_ios,
-                            size: 0.03 * sw,
-                            color: Color(0xff4285F4),
-                          ),
-                          Text(
-                            'Back',
-                            style: TextStyle(
-                              fontSize: 0.03 * sw,
-                              color: Color(0xff4285F4),
-                            ),
-                          ),
-                        ],
-                      ),
+            child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search for topics lessons..',
+                    suffixIcon: Icon(
+                      Symbols.search,
+                      color: Colors.grey.shade400,
                     ),
+                    hintStyle: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300),
+                    border: InputBorder.none,
                   ),
-                ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.7,
+            child: ListView.builder(
+              itemCount: 3,
+              itemBuilder: (ctx, index) {
+                final topic = topics[index];
+                return Padding(
                   padding:
-                      const EdgeInsets.only(top: 3.0, left: 13.0, right: 13.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search for topics lessons..',
-                      suffixIcon: Icon(
-                        Symbols.search,
-                        color: Colors.grey.shade400,
-                      ),
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300),
-                      border: InputBorder.none,
+                      EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
+                  child: Container(
+                    height: 50.sp,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 10.0,
+                          spreadRadius: 1.0,
+                        )
+                      ],
                     ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (ctx, index) {
-                  final topic = topics[index];
-                  return Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.sp, vertical: 2.sp),
-                    child: Container(
-                      height: 50.sp,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade200,
-                            blurRadius: 10.0,
-                            spreadRadius: 1.0,
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(4.sp),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                width: 45.w,
-                                height: 45.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.sp),
-                                ),
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(4.sp),
-                                      child: Image.asset(
-                                        'assets/imgs/${index % 2 == 0 ? 1 : 2}.png',
-                                        fit: BoxFit.cover,
+                    child: Padding(
+                      padding: EdgeInsets.all(4.sp),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              width: 45.w,
+                              height: 45.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.sp),
+                              ),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.sp),
+                                    child: Image.asset(
+                                      'assets/imgs/${index % 2 == 0 ? 1 : 2}.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 2.sp,
+                                    bottom: 2.sp,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Symbols.play_lesson,
+                                          size: 8.sp,
+                                          color: Colors.blue,
+                                        ),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 2.sp,
-                                      bottom: 2.sp,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            Symbols.play_lesson,
-                                            size: 8.sp,
-                                            color: Colors.blue,
+                                  )
+                                ],
+                              )),
+                          Gap(3.sp),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      topic['titel'].toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                    ),
+                                    Text(
+                                      topic['desc'].toString(),
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12),
+                                    ),
+                                    const Gap(10),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ArticleLesson()));
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Learn More",
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 6.sp,
+                                                fontWeight: FontWeight.w500),
                                           ),
-                                        ),
+                                          Gap(3.sp),
+                                          Icon(Symbols.arrow_forward_ios,
+                                              size: 5.sp, color: Colors.blue)
+                                        ],
                                       ),
                                     )
                                   ],
-                                )),
-                            Gap(3.sp),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        topic['titel'].toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14),
-                                      ),
-                                      Text(
-                                        topic['desc'].toString(),
-                                        style: const TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 12),
-                                      ),
-                                      const Gap(10),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ArticleLesson()));
-                                        },
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Learn More",
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontSize: 6.sp,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Gap(3.sp),
-                                            Icon(Symbols.arrow_forward_ios,
-                                                size: 5.sp, color: Colors.blue)
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                },
-              ),
-            )
-          ]),
-        )));
+                  ),
+                );
+              },
+            ),
+          )
+        ])));
   }
 }
 
@@ -580,6 +530,20 @@ class _ExploreLearnState extends State<ExploreLearn> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+          iconTheme: IconThemeData(
+            color: const Color.fromRGBO(54, 158, 255, 1),
+          ),
+          //iconTheme: IconThemeData(color: const Color.fromRGBO(54, 158, 255, 1), ),
+          title: Text('Feature Lessons',
+              style: TextStyle(
+                fontSize: 0.04 * sw,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              )),
+          centerTitle: true,
+        ),
         backgroundColor: const Color(0xffF6F7FA),
         body: SingleChildScrollView(
             child: SafeArea(
