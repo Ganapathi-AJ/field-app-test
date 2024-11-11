@@ -7,4 +7,5 @@ class DynamicWidgetTypes {
   static const String WELCOME = 'welcome';
   static const String CAROUSEL = 'carousel';
   static const String BANNER = 'banner';
+  static const String WEBVIEW = 'webview';
 }

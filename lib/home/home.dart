@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/global/constants.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
+import 'package:fieldapp_functionality/global/widgets/custon_webview.dart';
 import 'package:fieldapp_functionality/plugins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -148,6 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   pluginNotActivated(context);
                   return;
                 }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
+                  return;
+                }
                 if (flags.containsKey('')) if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -168,6 +176,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   pluginNotActivated(context);
                   return;
                 }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -184,10 +199,19 @@ class _HomeScreenState extends State<HomeScreen> {
               imageUrl: imageUrl,
               onTap: () {
                 final index = routeToIndex[route];
+
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
+                  return;
+                }
+
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -214,6 +238,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   pluginNotActivated(context);
                   return;
                 }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -235,6 +266,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
+                  return;
+                }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
                   return;
                 }
                 if (index != null) {
@@ -267,6 +305,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   pluginNotActivated(context);
                   return;
                 }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -292,6 +337,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
+                  return;
+                }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(mapData['url']);
+                  }));
                   return;
                 }
                 if (index != null) {
