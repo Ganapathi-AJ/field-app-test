@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -9,9 +10,73 @@ import 'package:path_provider/path_provider.dart';
 
 const primaryColorInvoice = Color(0xff369EFF);
 
-class InvoiceScanningScreen extends StatelessWidget {
+class FoldedEdgeContainer extends StatelessWidget {
+  final Widget child;
+
+  const FoldedEdgeContainer({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: FoldedEdgePainter(),
+      child: child,
+    );
+  }
+}
+
+class FoldedEdgePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    final Path mainPath = Path();
+    mainPath.moveTo(0, 0);
+    mainPath.lineTo(size.width - 40, 0);
+    mainPath.lineTo(size.width, 40);
+    mainPath.lineTo(size.width, size.height);
+    mainPath.lineTo(0, size.height);
+    mainPath.close();
+
+    canvas.drawPath(mainPath, paint);
+
+    final borderPaint = Paint()
+      ..color = Colors.grey[200]!
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    canvas.drawPath(mainPath, borderPaint);
+
+    final Path foldedPath = Path();
+    foldedPath.moveTo(size.width - 40, 0);
+    foldedPath.lineTo(size.width, 40);
+    foldedPath.lineTo(size.width - 40, 40);
+    foldedPath.close();
+
+    final Paint foldedPaint = Paint()
+      ..color = Colors.grey[300]!
+      ..style = PaintingStyle.fill;
+
+    canvas.drawPath(foldedPath, foldedPaint);
+
+    canvas.drawPath(foldedPath, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class InvoiceScanningScreen extends StatefulWidget {
   InvoiceScanningScreen({super.key});
 
+  @override
+  State<InvoiceScanningScreen> createState() => _InvoiceScanningScreenState();
+}
+
+class _InvoiceScanningScreenState extends State<InvoiceScanningScreen> {
   final bool noInvoiceAvl = false;
 
   final invoce = {
@@ -33,12 +98,59 @@ class InvoiceScanningScreen extends StatelessWidget {
     ]
   };
 
+  List<File> _scannedImages = [];
+
+  Future<void> _scanDocument() async {
+    try {
+      final scannedDocument = await CunningDocumentScanner.getPictures();
+      if (scannedDocument!.isNotEmpty) {
+        setState(() {
+          _scannedImages.add(File(scannedDocument[0]));
+        });
+      }
+    } catch (e) {
+      print('Error scanning document: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+      floatingActionButton: SizedBox(
+        width: 100,
+        height: 42,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            _scanDocument();
+          },
+          extendedPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+          label: const SizedBox(
+            child: Text(
+              'Scan',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'GoogleSans',
+              ),
+            ),
+          ),
+          icon: Icon(
+            Icons.camera_alt,
+            size: 18,
+            color: Colors.white,
+          ),
+          backgroundColor: const Color(0xFF4285F4),
+          elevation: 5,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -247,10 +359,132 @@ class InvoiceScanningScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 25,
+                },
+                if (_scannedImages.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 2 / 2.7,
+                      ),
+                      itemCount: _scannedImages.length,
+                      itemBuilder: (context, index) {
+                        return FoldedEdgeContainer(
+                          child: Container(
+                            decoration: BoxDecoration(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "#Invoice",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  "Bill No: #abcdefghiaak1053",
+                                  style: TextStyle(
+                                    fontSize: 8.5,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Container(
+                                  height: 70,
+                                  width: double.infinity,
+                                  child: Image.file(
+                                    _scannedImages[index],
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Amount",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      "170.10",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Created",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Nov 1, 2010",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Method",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue[100],
+                                        borderRadius: BorderRadius.circular(6),
+                                        border: Border.all(
+                                          color: Colors.grey[200]!,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "Scanned",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                }
+                ],
               ],
             ),
           ),
@@ -424,7 +658,9 @@ class _CaptureInvoiceState extends State<CaptureInvoice> {
                       const Gap(10),
                       if (_imageFile == null)
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            // _scanDocument();
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: primaryColorInvoice.withOpacity(0.1),
