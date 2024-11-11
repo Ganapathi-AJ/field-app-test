@@ -173,47 +173,6 @@ class _InvoiceScanningScreenState extends State<InvoiceScanningScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: sw * 0.2,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                Symbols.arrow_back_ios,
-                                size: 0.03 * sw,
-                                color: primaryColorInvoice,
-                              ),
-                              Text(
-                                'Back',
-                                style: TextStyle(
-                                  fontSize: 0.03 * sw,
-                                  color: primaryColorInvoice,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Text("Invoice Scanning",
-                          style: TextStyle(
-                            fontSize: 0.03 * sw,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          )),
-                      SizedBox(
-                        width: 0.2 * sw,
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(
                   height: 20,
                 ),

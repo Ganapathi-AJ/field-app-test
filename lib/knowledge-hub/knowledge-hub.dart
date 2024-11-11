@@ -549,38 +549,6 @@ class _ExploreLearnState extends State<ExploreLearn> {
             child: SafeArea(
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: sw * 0.2,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Symbols.arrow_back_ios,
-                            size: 0.03 * sw,
-                            color: Color(0xff4285F4),
-                          ),
-                          Text(
-                            'Back',
-                            style: TextStyle(
-                              fontSize: 0.03 * sw,
-                              color: Color(0xff4285F4),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.all(18.0),
               child: Container(
                 decoration: BoxDecoration(

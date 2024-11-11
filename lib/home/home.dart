@@ -28,6 +28,47 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     fetchData();
+    fetchFlags();
+  }
+
+  Map<String, dynamic> flags = {};
+
+  Future<void> fetchFlags() async {
+    final DocumentReference<Map<String, dynamic>> docRef = FirebaseFirestore
+        .instance
+        .collection('modules')
+        .doc('flags')
+        .withConverter<Map<String, dynamic>>(
+          fromFirestore: (snapshot, _) => snapshot.data() ?? {},
+          toFirestore: (data, _) => data,
+        );
+
+    final DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await docRef.get();
+
+    flags = querySnapshot.data() ?? {};
+    print(flags);
+  }
+
+  bool isDisabled(String route) {
+    bool isDisabled = false;
+    final routeToModuleTable = {
+      '/invoice': 'invoice',
+      '/ar-module': 'ar-module',
+      '/qr': 'qr',
+      '/image': 'image-analysis',
+      '/survey': 'survey',
+      '/sales': 'sales',
+      '/home': 'home',
+      '/inventory': 'inventory',
+      '/knowledge': 'knowledge',
+    };
+    // print('flag: ' + flags[routeToModuleTable[route]]);
+
+    if (flags[routeToModuleTable[route]] == false) {
+      isDisabled = true;
+    }
+    return isDisabled;
   }
 
   Future<void> fetchData() async {
@@ -70,11 +111,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void pluginNotActivated(BuildContext ctx) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Plugin is Not Activated")));
+  }
+
+  List<dynamic> footerChildren = [];
   void initializePages() {
     pages = [buildHomePage()];
 
-    final List<dynamic> footerChildren =
-        footerData?['children'] as List<dynamic>? ?? [];
+    footerChildren = footerData?['children'] as List<dynamic>? ?? [];
 
     for (var i = 0; i < footerChildren.length; i++) {
       final String route = footerChildren[i]['ontap-route'] as String? ?? '';
@@ -98,7 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
               imageUrl: imageUrl,
               onTap: () {
                 final index = routeToIndex[route];
-                if (index != null) {
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
+                if (flags.containsKey('')) if (index != null) {
                   setState(() {
                     currentIndex = index;
                   });
@@ -114,6 +164,10 @@ class _HomeScreenState extends State<HomeScreen> {
               imageUrl: imageUrl,
               onTap: () {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -130,6 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
               imageUrl: imageUrl,
               onTap: () {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -152,6 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: children,
               onTap: (route) {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -171,6 +233,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: children,
               onTap: (route) {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -197,6 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: children,
               onTap: (route) {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -220,6 +290,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: children,
               onTap: (route) {
                 final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
                 if (index != null) {
                   setState(() {
                     currentIndex = index;
@@ -325,9 +399,20 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: currentIndex,
         footerData: footerData,
         onIndexChanged: (index) {
-          setState(() {
-            currentIndex = index;
-          });
+          if (index == 0) {
+            setState(() {
+              currentIndex = index;
+            });
+          } else {
+            final route = footerChildren[index - 1]['ontap-route'];
+            if (isDisabled(route)) {
+              pluginNotActivated(context);
+              return;
+            }
+            setState(() {
+              currentIndex = index;
+            });
+          }
         },
       ),
     );
