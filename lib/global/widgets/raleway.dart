@@ -49,7 +49,8 @@ class RalewayType1 extends StatelessWidget {
             itemBuilder: (context, index) {
               return ScalingButton(
                 onTap: () {
-                  onTap(children.elementAt(index)['ontap-route']);
+                  onTap(children.elementAt(index)['ontap-route'],
+                      children.elementAt(index)['url']);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),
@@ -124,7 +125,8 @@ class RalewayType2 extends StatelessWidget {
             itemBuilder: (context, index) {
               return ScalingButton(
                 onTap: () {
-                  onTap(children.elementAt(index)['ontap-route']);
+                  onTap(children.elementAt(index)['ontap-route'],
+                      children.elementAt(index)['url']);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 9.0),
@@ -222,7 +224,8 @@ class RalewayType3 extends StatelessWidget {
                     for (int i = 0; i < children.length; i++)
                       ScalingButton(
                         onTap: () {
-                          onTap(children.elementAt(i)['ontap-route']);
+                          onTap(children.elementAt(i)['ontap-route'],
+                              children.elementAt(i)['url']);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 9.0),
@@ -328,7 +331,8 @@ class RalewayType4 extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ScalingButton(
                     onTap: () {
-                      onTap(children.elementAt(index)['ontap-route']);
+                      onTap(children.elementAt(index)['ontap-route'],
+                          children.elementAt(index)['url']);
                     },
                     child: Padding(
                       padding: EdgeInsets.only(right: 0.04.sw),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class CustonWebview extends StatefulWidget {
+class CustomWebview extends StatefulWidget {
   final String url;
-  CustonWebview(this.url);
+  CustomWebview(this.url);
   @override
-  _CustonWebviewState createState() => _CustonWebviewState();
+  _CustomWebviewState createState() => _CustomWebviewState();
 }
 
-class _CustonWebviewState extends State<CustonWebview> {
+class _CustomWebviewState extends State<CustomWebview> {
   late WebViewController _controller;
 
   @override
@@ -24,21 +24,10 @@ class _CustonWebviewState extends State<CustonWebview> {
     final sw = MediaQuery.of(context).size.width;
     final sh = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 246, 247, 250),
-        iconTheme: IconThemeData(
-          color: const Color.fromRGBO(54, 158, 255, 1),
+      body: SafeArea(
+        child: WebViewWidget(
+          controller: _controller,
         ),
-        title: Text('Webview',
-            style: TextStyle(
-              fontSize: 0.04 * sw,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            )),
-        centerTitle: true,
-      ),
-      body: WebViewWidget(
-        controller: _controller,
       ),
     );
   }

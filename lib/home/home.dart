@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (route == '/webview') {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustomWebview(mapData['url']);
                   }));
                   return;
                 }
@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (route == '/webview') {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (route == '/webview') {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -242,17 +242,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
           currentWidget = CarouselType1(
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -273,17 +272,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
           currentWidget = CarouselType2(
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -311,17 +309,16 @@ class _HomeScreenState extends State<HomeScreen> {
               heading: title,
               headerLogo: headerLogo,
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -346,17 +343,16 @@ class _HomeScreenState extends State<HomeScreen> {
               heading: title,
               headerLogo: headerLogo,
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -381,17 +377,16 @@ class _HomeScreenState extends State<HomeScreen> {
               heading: title,
               headerLogo: headerLogo,
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }
@@ -416,17 +411,16 @@ class _HomeScreenState extends State<HomeScreen> {
               heading: title,
               headerLogo: headerLogo,
               children: children,
-              onTap: (route) {
+              onTap: (route, url) {
                 final index = routeToIndex[route];
                 if (isDisabled(route)) {
                   pluginNotActivated(context);
                   return;
                 }
                 if (route == '/webview') {
-                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(url);
+                    return CustomWebview(url);
                   }));
                   return;
                 }

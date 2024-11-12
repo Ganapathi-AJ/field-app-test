@@ -68,7 +68,7 @@ class _CarouselType1State extends State<CarouselType1> {
               final i = widget.children[index];
               return ScalingButton(
                 onTap: () {
-                  widget.onTap(i['ontap-route']);
+                  widget.onTap(i['ontap-route'], i['url']);
                 },
                 child: CachedNetworkImage(
                   imageUrl: i['imageUrl'] ?? '',
@@ -188,7 +188,8 @@ class _CarouselType2State extends State<CarouselType2> {
                 },
                 onTap: () {
                   if (currentPage == i) {
-                    widget.onTap(widget.children[i]['ontap-route']);
+                    widget.onTap(widget.children[i]['ontap-route'],
+                        widget.children[i]['url']);
                   }
                   setState(() {
                     currentPage = i;
