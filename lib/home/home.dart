@@ -167,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (typeNumber == 2) {
           final String imageUrl = mapData['imageUrl'] as String? ?? '';
           final String route = mapData['ontap-route'] as String? ?? '';
+          final String url = mapData['url'] as String? ?? '';
 
           currentWidget = BannerType2(
               imageUrl: imageUrl,
@@ -179,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (route == '/webview') {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -194,6 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (typeNumber == 3) {
           final String imageUrl = mapData['imageUrl'] as String? ?? '';
           final String route = mapData['ontap-route'] as String? ?? '';
+          final String url = mapData['url'] as String? ?? '';
 
           currentWidget = BannerType3(
               imageUrl: imageUrl,
@@ -207,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (route == '/webview') {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -239,9 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   return;
                 }
                 if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -269,9 +272,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   return;
                 }
                 if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -306,9 +310,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   return;
                 }
                 if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -340,9 +345,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   return;
                 }
                 if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return CustonWebview(mapData['url']);
+                    return CustonWebview(url);
                   }));
                   return;
                 }
@@ -387,6 +393,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _onRefresh() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      fetchData();
+      fetchFlags();
+    } catch (e) {
+      debugPrint("Error fetching data: $e");
+    }
+  }
+
   Widget buildHomePage() {
     return Stack(
       alignment: Alignment.center,
@@ -400,32 +418,35 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 0.3 * MediaQuery.of(context).size.height,
           ),
         ),
-        SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).padding.top),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Symbols.notifications,
-                      size: 0.03.sh,
-                    ),
-                    const SizedBox(width: 10),
-                    FieldImage(
-                      'assets/Image-60.png',
-                      width: 0.03.sh,
-                      height: 0.03.sh,
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                WelcomeType1(greeting: 'Good Morning', name: 'John Doe'),
-                ...layoutData.map((data) => returnTheWidget(data)),
-              ],
+        RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).padding.top),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Symbols.notifications,
+                        size: 0.03.sh,
+                      ),
+                      const SizedBox(width: 10),
+                      FieldImage(
+                        'assets/Image-60.png',
+                        width: 0.03.sh,
+                        height: 0.03.sh,
+                      ),
+                      const SizedBox(width: 15),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  WelcomeType1(greeting: 'Good Morning', name: 'John Doe'),
+                  ...layoutData.map((data) => returnTheWidget(data)),
+                ],
+              ),
             ),
           ),
         ),
