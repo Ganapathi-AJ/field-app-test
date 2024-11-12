@@ -3,6 +3,7 @@ import 'package:fieldapp_functionality/arplugin/arplugin.dart';
 import 'package:fieldapp_functionality/global/constants.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:fieldapp_functionality/global/widgets/custon_webview.dart';
+import 'package:fieldapp_functionality/imageanaylisys_labled.dart';
 import 'package:fieldapp_functionality/plugins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       '/home': 'home',
       '/inventory': 'inventory',
       '/knowledge': 'knowledge',
+      'image-labled': 'image-analysis-labled'
     };
     // print('flag: ' + flags[routeToModuleTable[route]]);
 
@@ -464,6 +466,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return QRBarcodeScannerScreen();
       case '/image':
         return ImageAnalysisScreen();
+      case '/image-labled':
+        return ImageAnalysisLabledScreen();
       case '/survey':
         return const SurveyForm();
       case '/sales':
