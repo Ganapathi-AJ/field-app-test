@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = true;
   int currentIndex = 0;
+  int layoutTypeNumber = 1;
   Map<String, dynamic>? footerData;
   final List<Map<String, dynamic>> layoutData = [];
   late final List<Widget> pages;
@@ -74,17 +75,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> fetchData() async {
     try {
-      final CollectionReference collectionRef = FirebaseFirestore.instance
+      final clientDoc = await FirebaseFirestore.instance
+          .collection('homepage-layout')
+          .doc('client1')
+          .get();
+
+      layoutTypeNumber = clientDoc.data()?['layout-type'] ?? 1;
+
+      final collectionRef = FirebaseFirestore.instance
           .collection('homepage-layout')
           .doc('client1')
           .collection('children');
 
       final QuerySnapshot querySnapshot = await collectionRef.get();
 
-      final dataList = querySnapshot.docs.map((doc) {
-        final data = doc.data();
-        return data is Map<String, dynamic> ? data : <String, dynamic>{};
-      }).toList();
+      final dataList = querySnapshot.docs
+          .map((doc) => doc.data())
+          .whereType<Map<String, dynamic>>()
+          .cast<Map<String, dynamic>>()
+          .toList();
 
       final footerItems = dataList
           .where((element) => element['widget-type'] == 'footer')
@@ -92,11 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       footerData = footerItems.isNotEmpty ? footerItems.first : null;
 
-      dataList.sort((a, b) {
-        final aOrder = a['order'] as int? ?? 0;
-        final bOrder = b['order'] as int? ?? 0;
-        return aOrder.compareTo(bOrder);
-      });
+      dataList.sort((a, b) =>
+          (a['order'] as int? ?? 0).compareTo(b['order'] as int? ?? 0));
 
       layoutData
         ..clear()
@@ -360,12 +366,92 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).pushNamed(route);
                 }
               });
+        } else if (typeNumber == 3) {
+          final String title = mapData['title'] as String? ?? '';
+          final String? headerLogo = mapData['headerLogo'] as String?;
+          final List<Map<String, dynamic>> children =
+              (mapData['children'] as List<dynamic>?)
+                      ?.map((e) => e as Map<String, dynamic>)
+                      .toList() ??
+                  [];
+
+          currentWidget = RalewayType3(
+              heading: title,
+              headerLogo: headerLogo,
+              children: children,
+              onTap: (route) {
+                final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
+                if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(url);
+                  }));
+                  return;
+                }
+                if (index != null) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                } else {
+                  Navigator.of(context).pushNamed(route);
+                }
+              });
+        } else if (typeNumber == 4) {
+          final String title = mapData['title'] as String? ?? '';
+          final String? headerLogo = mapData['headerLogo'] as String?;
+          final List<Map<String, dynamic>> children =
+              (mapData['children'] as List<dynamic>?)
+                      ?.map((e) => e as Map<String, dynamic>)
+                      .toList() ??
+                  [];
+
+          currentWidget = RalewayType4(
+              heading: title,
+              headerLogo: headerLogo,
+              children: children,
+              onTap: (route) {
+                final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
+                if (route == '/webview') {
+                  String url = mapData['url'] as String? ?? '';
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustonWebview(url);
+                  }));
+                  return;
+                }
+                if (index != null) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                } else {
+                  Navigator.of(context).pushNamed(route);
+                }
+              });
         }
         break;
     }
 
     return Padding(
         padding: EdgeInsets.only(bottom: 0.015.sh), child: currentWidget);
+  }
+
+  Widget buildHeaderWidget() {
+    if (layoutTypeNumber == 1) {
+      return WelcomeType1(greeting: 'Good Morning', name: 'John Doe');
+    } else if (layoutTypeNumber == 2) {
+      return SizedBox(height: 0.05.sh);
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget getPageForRoute(String route) {
@@ -443,7 +529,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  WelcomeType1(greeting: 'Good Morning', name: 'John Doe'),
+                  buildHeaderWidget(),
                   ...layoutData.map((data) => returnTheWidget(data)),
                 ],
               ),
