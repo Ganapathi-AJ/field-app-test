@@ -604,200 +604,246 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
         ),
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 19.0, vertical: 10),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       GestureDetector(
-              //         onTap: () {
-              //           Navigator.pop(context);
-              //         },
-              //         child: Row(
-              //           children: [
-              //             Icon(
-              //               Symbols.arrow_back_ios,
-              //               size: 17,
-              //               color: primaryColor,
-              //             ),
-              //             Text(
-              //               'Back',
-              //               style: TextStyle(
-              //                 fontSize: 15,
-              //                 color: primaryColor,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //       Text("Image Analysis",
-              //           style: TextStyle(
-              //             fontSize: 18,
-              //             fontWeight: FontWeight.w500,
-              //             color: primaryColor,
-              //           )),
-              //       const SizedBox(),
-              //       const SizedBox()
-              //     ],
-              //   ),
-              // ),
-              // const Gap(40),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // Padding(
+                //   padding:
+                //       const EdgeInsets.symmetric(horizontal: 19.0, vertical: 10),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       GestureDetector(
+                //         onTap: () {
+                //           Navigator.pop(context);
+                //         },
+                //         child: Row(
+                //           children: [
+                //             Icon(
+                //               Symbols.arrow_back_ios,
+                //               size: 17,
+                //               color: primaryColor,
+                //             ),
+                //             Text(
+                //               'Back',
+                //               style: TextStyle(
+                //                 fontSize: 15,
+                //                 color: primaryColor,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Text("Image Analysis",
+                //           style: TextStyle(
+                //             fontSize: 18,
+                //             fontWeight: FontWeight.w500,
+                //             color: primaryColor,
+                //           )),
+                //       const SizedBox(),
+                //       const SizedBox()
+                //     ],
+                //   ),
+                // ),
+                // const Gap(40),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 120,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.file(
+                                    widget.img!,
+                                  ),
+                                ),
+                              ),
+                              const Gap(10),
+                              Text(
+                                widget.txt!,
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                      const Gap(10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 6.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 120,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.file(
-                                  widget.img!,
+                            Container(
+                              decoration: BoxDecoration(
+                                color: primaryColor.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Icon(
+                                  Symbols.auto_awesome,
+                                  color: primaryColor,
                                 ),
                               ),
                             ),
                             const Gap(10),
-                            Text(
-                              widget.txt!,
-                              style: const TextStyle(
-                                  fontSize: 18, color: Colors.black),
-                            ),
+                            Container(
+                                width: 250,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: isLoading
+                                      ? const EdgeInsets.all(18.0)
+                                      : const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 17),
+                                  child: isLoading
+                                      ? Column(
+                                          children: [
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                              child: Container(
+                                                width: 300,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                              child: Container(
+                                                width: 300,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                              child: Container(
+                                                width: 300,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                              child: Container(
+                                                width: 300,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                              child: Container(
+                                                width: 300,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                          ],
+                                        )
+                                      : RichText(
+                                          text: TextSpan(
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black87),
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    'The current gauge reading is identified as ',
+                                                style: TextStyle(),
+                                              ),
+                                              TextSpan(
+                                                text: '40, ',
+                                                style: TextStyle(
+                                                  fontSize: 21,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    'which falls above the recommended operational threshold for this equipment.\nBased on this reading, ',
+                                              ),
+                                              TextSpan(
+                                                  text:
+                                                      "maintenance is advised ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(
+                                                  text:
+                                                      "due to the following conditions:\n\n1. Increased Risk of Overload: The gauge value suggests the equipment is experiencing higher stress levels than typical operating conditions, which may lead to wear and eventual failure if not addressed.\n\n2. Preventive Maintenance Requirement: It’s recommended to perform preventive maintenance within the next [time frame] to ensure continued safe and efficient operation.\n\nSuggested Actions:\n\n"),
+                                              TextSpan(
+                                                  text:
+                                                      "- Inspect components linked to the gauge to identify any signs of wear or impending failure.\n\n- Review operational conditions to ensure compliance with manufacturer’s specifications.\n\n- Schedule maintenance to recalibrate or replace affected parts if necessary.\n\n"),
+                                              TextSpan(
+                                                  text:
+                                                      "For detailed guidance, consult the maintenance manual or contact a certified technician.",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold))
+                                            ],
+                                          ),
+                                        ),
+
+                                  // Text(
+                                  //   "The current gauge reading is identified as 40, which falls above the recommended operational threshold for this equipment.\nBased on this reading, maintenance is advised due to the following conditions:\n\n1. Increased Risk of Overload: The gauge value suggests the equipment is experiencing higher stress levels than typical operating conditions, which may lead to wear and eventual failure if not addressed.\n\n2. Preventive Maintenance Requirement: It’s recommended to perform preventive maintenance within the next [time frame] to ensure continued safe and efficient operation.\n\nSuggested Actions:\nInspect components linked to the gauge to identify any signs of wear or impending failure.\nReview operational conditions to ensure compliance with manufacturer’s specifications.\nSchedule maintenance to recalibrate or replace affected parts if necessary.\nFor detailed guidance, consult the maintenance manual or contact a certified technician.")),
+                                  // : Text(analysisResult ?? "")),
+                                ))
                           ],
                         ),
-                      ),
-                    ),
-                    const Gap(10),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 6.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.2),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Icon(
-                                Symbols.auto_awesome,
-                                color: primaryColor,
-                              ),
-                            ),
-                          ),
-                          const Gap(10),
-                          Container(
-                            width: 300,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                                padding: isLoading
-                                    ? const EdgeInsets.all(18.0)
-                                    : const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 17),
-                                child: isLoading
-                                    ? Column(
-                                        children: [
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 300,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                          const Gap(5),
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 300,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                          const Gap(5),
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 300,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                          const Gap(5),
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 300,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                          const Gap(5),
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 300,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                          const Gap(5),
-                                        ],
-                                      )
-                                    : Text(
-                                        "The current gauge reading is identified as 40, which falls above the recommended operational threshold for this equipment.\nBased on this reading, maintenance is advised due to the following conditions:\n\n1. Increased Risk of Overload: The gauge value suggests the equipment is experiencing higher stress levels than typical operating conditions, which may lead to wear and eventual failure if not addressed.\n\n2. Preventive Maintenance Requirement: It’s recommended to perform preventive maintenance within the next [time frame] to ensure continued safe and efficient operation.\n\nSuggested Actions:\nInspect components linked to the gauge to identify any signs of wear or impending failure.\nReview operational conditions to ensure compliance with manufacturer’s specifications.\nSchedule maintenance to recalibrate or replace affected parts if necessary.\nFor detailed guidance, consult the maintenance manual or contact a certified technician.")),
-                            // : Text(analysisResult ?? "")),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              const Gap(10),
-            ],
+                const Gap(10),
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
