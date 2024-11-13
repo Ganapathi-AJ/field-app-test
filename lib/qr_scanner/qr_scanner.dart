@@ -11,8 +11,22 @@ class _QRBarcodeScannerScreenState extends State<QRBarcodeScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sw = MediaQuery.of(context).size.width;
+    final sh = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: const Text('QR & Barcode Scanner')),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 246, 247, 250),
+        iconTheme: IconThemeData(
+          color: const Color.fromRGBO(54, 158, 255, 1),
+        ),
+        title: Text('Inventory Management',
+            style: TextStyle(
+              fontSize: 0.04 * sw,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            )),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           Expanded(

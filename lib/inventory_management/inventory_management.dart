@@ -32,22 +32,90 @@ class InventoryManagementScreen extends StatelessWidget {
             Gap(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  width: 300,
-                  height: 130,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 10,
-                            blurRadius: 5)
-                      ],
-                      color: Colors.white),
+                SizedBox(
+                  child: Container(
+                      width: sw - 40,
+                      height: sh / 10,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 10,
+                                blurRadius: 5)
+                          ],
+                          color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ...inventoryHeaderData.map(
+                            (currentItem) {
+                              Color capusleColor = Colors.grey;
+                              String status = 'Unknown';
+                              if (currentItem['status'] ==
+                                  InventoryStatus.COMPLETED) {
+                                capusleColor = Colors.green;
+                                status = 'Completed';
+                              }
+                              if (currentItem['status'] ==
+                                  InventoryStatus.OVERDUE) {
+                                capusleColor = Colors.red;
+                                status = 'Overdue';
+                              }
+                              if (currentItem['status'] ==
+                                  InventoryStatus.ONGOING) {
+                                capusleColor = Colors.orange;
+                                status = 'Ongoing';
+                              }
+                              if (currentItem['status'] ==
+                                  InventoryStatus.TODO) {
+                                capusleColor = Colors.blue;
+                                status = 'To-do';
+                              }
+
+                              if (currentItem['status'] ==
+                                  InventoryStatus.SHIPPED) {
+                                capusleColor = Colors.purple;
+                                status = 'Shipped';
+                              }
+                              return Container(
+                                width: (sw - 100) / 5,
+                                height: (sh / 10) - 10,
+                                decoration: BoxDecoration(
+                                  color: capusleColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        currentItem['number'].toString(),
+                                        style: TextStyle(
+                                            color: capusleColor, fontSize: 20),
+                                      ),
+                                      FittedBox(
+                                        child: Text(
+                                          status.toString(),
+                                          style: TextStyle(
+                                              color: capusleColor,
+                                              fontSize: 13),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      )),
                 )
               ],
             ),
+            Gap(10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Row(
@@ -59,11 +127,36 @@ class InventoryManagementScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Gap(10),
             ListView.builder(
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: inventoryData.length,
                 itemBuilder: (context, index) {
                   Map currentItem = inventoryData.elementAt(index);
+                  Color capusleColor = Colors.grey;
+                  String status = 'Unknown';
+                  if (currentItem['status'] == InventoryStatus.COMPLETED) {
+                    capusleColor = Colors.green;
+                    status = 'Completed';
+                  }
+                  if (currentItem['status'] == InventoryStatus.OVERDUE) {
+                    capusleColor = Colors.red;
+                    status = 'Overdue';
+                  }
+                  if (currentItem['status'] == InventoryStatus.ONGOING) {
+                    capusleColor = Colors.orange;
+                    status = 'Ongoing';
+                  }
+                  if (currentItem['status'] == InventoryStatus.TODO) {
+                    capusleColor = Colors.blue;
+                    status = 'To-do';
+                  }
+
+                  if (currentItem['status'] == InventoryStatus.SHIPPED) {
+                    capusleColor = Colors.purple;
+                    status = 'Shipped';
+                  }
                   return InkWell(
                     onTap: () {
                       Navigator.of(context)
@@ -83,51 +176,126 @@ class InventoryManagementScreen extends StatelessWidget {
                                 blurRadius: 5)
                           ],
                           color: Colors.white),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            child: Icon(Symbols.abc),
-                          ),
-                          Gap(10),
-                          Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(currentItem['title']),
-                                  Text(
-                                    currentItem['client'],
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
+                      child: IntrinsicHeight(
+                        child: Row(
+                          //crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                      color: capusleColor.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: Icon(
+                                      currentItem['icon'],
+                                      color: capusleColor,
+                                    ),
                                   ),
-                                ],
-                              ),
-                              Gap(15),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                                ),
+                                Gap(10),
+                                Column(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          currentItem['title'],
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        Text(
+                                          currentItem['client'],
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                    Gap(15),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Symbols.location_on,
+                                              size: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              currentItem['location'],
+                                            ),
+                                          ],
+                                        ),
+                                        Gap(3),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Symbols.watch_later_rounded,
+                                              size: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              currentItem['time'],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 7),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: capusleColor),
+                                    color: capusleColor.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
                                     children: [
-                                      Icon(Symbols.location_on),
+                                      Icon(
+                                        Icons.circle,
+                                        color: capusleColor,
+                                        size: 9,
+                                      ),
+                                      SizedBox(
+                                        width: 3.5,
+                                      ),
                                       Text(
-                                        currentItem['location'],
+                                        status,
+                                        style: TextStyle(
+                                            color: capusleColor, fontSize: 11),
                                       ),
                                     ],
                                   ),
-                                  Gap(3),
-                                  Row(
-                                    children: [
-                                      Icon(Symbols.watch_later_rounded),
-                                      Text(
-                                        currentItem['time'],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 15,
+                                  color: Colors.black54,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
