@@ -79,14 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final clientDoc = await FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client1')
+          .doc('client11')
           .get();
 
       layoutTypeNumber = clientDoc.data()?['layout-type'] ?? 1;
 
       final collectionRef = FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client1')
+          .doc('client11')
           .collection('children');
 
       final QuerySnapshot querySnapshot = await collectionRef.get();
@@ -271,6 +271,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   [];
 
           currentWidget = CarouselType2(
+              children: children,
+              onTap: (route, url) {
+                final index = routeToIndex[route];
+                if (isDisabled(route)) {
+                  pluginNotActivated(context);
+                  return;
+                }
+                if (route == '/webview') {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return CustomWebview(url);
+                  }));
+                  return;
+                }
+                if (index != null) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                } else {
+                  Navigator.of(context).pushNamed(route);
+                }
+              });
+        } else if (typeNumber == 3) {
+          final List<Map<String, dynamic>> children =
+              (mapData['children'] as List<dynamic>?)
+                      ?.map((e) => e as Map<String, dynamic>)
+                      .toList() ??
+                  [];
+
+          currentWidget = CarouselType3(
               children: children,
               onTap: (route, url) {
                 final index = routeToIndex[route];
@@ -527,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  buildHeaderWidget(),
+                  //   buildHeaderWidget(),
                   ...layoutData.map((data) => returnTheWidget(data)),
                 ],
               ),

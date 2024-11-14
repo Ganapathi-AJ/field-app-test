@@ -259,3 +259,156 @@ class _CarouselType2State extends State<CarouselType2> {
     );
   }
 }
+
+class CarouselType3 extends StatefulWidget {
+  const CarouselType3(
+      {super.key,
+      required this.children,
+      this.autoPlay = true,
+      required this.onTap});
+  final List<Map<String, dynamic>> children;
+  final bool autoPlay;
+  final Function onTap;
+
+  @override
+  State<CarouselType3> createState() => _CarouselType3State();
+}
+
+class _CarouselType3State extends State<CarouselType3> {
+  int currentPage = 0;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 3), (Timer t) {
+      goToNext();
+    });
+  }
+
+  void goToNext() {
+    if (!widget.autoPlay) {
+      return;
+    }
+    if (currentPage < widget.children.length - 1) {
+      currentPage++;
+    } else {
+      currentPage = 0;
+    }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.children.length; i++)
+              GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity! > 0) {
+                    if (currentPage > 0) {
+                      setState(() {
+                        currentPage--;
+                        timer.cancel();
+                        timer = Timer.periodic(const Duration(seconds: 3),
+                            (Timer t) {
+                          goToNext();
+                        });
+                      });
+                    }
+                  } else {
+                    if (currentPage < widget.children.length - 1) {
+                      setState(() {
+                        currentPage++;
+                        timer.cancel();
+                        timer = Timer.periodic(const Duration(seconds: 3),
+                            (Timer t) {
+                          goToNext();
+                        });
+                      });
+                    }
+                  }
+                },
+                onTap: () {
+                  if (currentPage == i) {
+                    widget.onTap(widget.children[i]['ontap-route'],
+                        widget.children[i]['url']);
+                  }
+                  setState(() {
+                    currentPage = i;
+                    timer.cancel();
+                    timer =
+                        Timer.periodic(const Duration(seconds: 3), (Timer t) {
+                      goToNext();
+                    });
+                  });
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: i == currentPage
+                      ? MediaQuery.of(context).size.width * 0.85
+                      : i == 1
+                          ? MediaQuery.of(context).size.width * 0.15
+                          : i == currentPage - 1
+                              ? MediaQuery.of(context).size.width * 0.15
+                              : 0.h,
+                  height: 60.h,
+                  margin: i == currentPage
+                      ? i == 0
+                          ? EdgeInsets.only(right: 4.5.w)
+                          : EdgeInsets.only(left: 4.5.w)
+                      : EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(7.5.r)),
+                  ),
+                  child: Stack(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: widget.children[i]['imageUrl'] ?? '',
+                        height: 64.h,
+                        width: 136.64.w,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+        SizedBox(height: 5.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < widget.children.length; i++)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: i == currentPage ? 9.2.w : 2.5.h,
+                height: 2.5.h,
+                margin: i == widget.children.length - 1
+                    ? EdgeInsets.zero
+                    : EdgeInsets.only(right: 2.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(22.r)),
+                  color: currentPage == i
+                      ? Colors.blue
+                      : Colors.blue.withOpacity(0.2),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
