@@ -79,14 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final clientDoc = await FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client11')
+          .doc('client1')
           .get();
 
       layoutTypeNumber = clientDoc.data()?['layout-type'] ?? 1;
 
       final collectionRef = FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client11')
+          .doc('client1')
           .collection('children');
 
       final QuerySnapshot querySnapshot = await collectionRef.get();
