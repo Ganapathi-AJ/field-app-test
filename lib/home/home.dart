@@ -4,7 +4,9 @@ import 'package:fieldapp_functionality/global/constants.dart';
 import 'package:fieldapp_functionality/global/global_widgets.dart';
 import 'package:fieldapp_functionality/global/widgets/custon_webview.dart';
 import 'package:fieldapp_functionality/imageanaylisys_labled.dart';
+import 'package:fieldapp_functionality/login/redirect.dart';
 import 'package:fieldapp_functionality/plugins.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -30,11 +32,58 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    fetchData();
-    fetchFlags();
+    fetchAllData();
   }
 
   Map<String, dynamic> flags = {};
+
+  late String clientName;
+  fetchAllData() async {
+    await fetchClientName();
+    await fetchData();
+    await fetchFlags();
+  }
+
+  Future<String?> fetchClientName() async {
+    try {
+      // Get the currently logged-in user's email
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw Exception("No user is currently logged in.");
+      }
+
+      final userEmail = currentUser.email;
+      if (userEmail == null) {
+        throw Exception("Logged-in user does not have an email.");
+      }
+
+      // Access the Firestore instance
+      final firestore = FirebaseFirestore.instance;
+
+      // Query the "users" collection for a document where the "users" array contains the current user's email
+      final querySnapshot = await firestore.collection('users').get();
+
+      for (var doc in querySnapshot.docs) {
+        final userList = doc.data()['users'] as List<dynamic>?;
+
+        if (userList != null) {
+          for (var user in userList) {
+            if (user is Map<String, dynamic> && user['email'] == userEmail) {
+              clientName = doc.id;
+              return doc.id; // Return the client name (document ID)
+            }
+          }
+        }
+      }
+
+      // If no matching client is found
+
+      return null;
+    } catch (e) {
+      print("Error fetching client name: $e");
+      return null;
+    }
+  }
 
   Future<void> fetchFlags() async {
     final DocumentReference<Map<String, dynamic>> docRef = FirebaseFirestore
@@ -79,14 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final clientDoc = await FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client1')
+          .doc(clientName)
           .get();
 
       layoutTypeNumber = clientDoc.data()?['layout-type'] ?? 1;
 
       final collectionRef = FirebaseFirestore.instance
           .collection('homepage-layout')
-          .doc('client1')
+          .doc(clientName)
           .collection('children');
 
       final QuerySnapshot querySnapshot = await collectionRef.get();
@@ -548,16 +597,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 0.03.sh,
                       ),
                       const SizedBox(width: 10),
-                      FieldImage(
-                        'assets/Image-60.png',
-                        width: 0.03.sh,
-                        height: 0.03.sh,
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Do you want to logout?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance.signOut();
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return Redirect();
+                                          }));
+                                        },
+                                        child: Text('Confirm'))
+                                  ],
+                                );
+                              });
+                        },
+                        child: FieldImage(
+                          'assets/Image-60.png',
+                          width: 0.03.sh,
+                          height: 0.03.sh,
+                        ),
                       ),
                       const SizedBox(width: 15),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  //   buildHeaderWidget(),
+                  buildHeaderWidget(),
                   ...layoutData.map((data) => returnTheWidget(data)),
                 ],
               ),
