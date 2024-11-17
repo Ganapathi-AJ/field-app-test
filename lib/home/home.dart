@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   int layoutTypeNumber = 1;
   Map<String, dynamic>? footerData;
+  Widget? FooterWidget;
   final List<Map<String, dynamic>> layoutData = [];
   late final List<Widget> pages;
   final Map<String, int> routeToIndex = {'/home': 0};
@@ -178,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<dynamic> footerChildren = [];
+
   void initializePages() {
     pages = [buildHomePage()];
 
@@ -188,6 +190,8 @@ class _HomeScreenState extends State<HomeScreen> {
       routeToIndex[route] = i + 1;
       pages.add(getPageForRoute(route));
     }
+
+    buildFooterWidget(footerData ?? {});
   }
 
   Widget returnTheWidget(Map<String, dynamic> mapData) {
@@ -567,6 +571,74 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  buildFooterWidget(Map<String, dynamic> mapData) {
+    final int widgetNum = mapData['widget-number'] as int? ?? 0;
+    if (widgetNum == 1) {
+      FooterWidget = CustomBottomNavBar(
+        currentIndex: currentIndex,
+        footerData: footerData,
+        onIndexChanged: (index) {
+          if (index == 0) {
+            setState(() {
+              currentIndex = index;
+            });
+          } else {
+            final route = footerChildren[index - 1]['ontap-route'];
+            if (isDisabled(route)) {
+              pluginNotActivated(context);
+              return;
+            }
+            setState(() {
+              currentIndex = index;
+            });
+          }
+        },
+      );
+    } else if (widgetNum == 2) {
+      FooterWidget = BottomBar2(
+        currentIndex: currentIndex,
+        footerData: footerData,
+        onIndexChanged: (index) {
+          if (index == 0) {
+            setState(() {
+              currentIndex = index;
+            });
+          } else {
+            final route = footerChildren[index - 1]['ontap-route'];
+            if (isDisabled(route)) {
+              pluginNotActivated(context);
+              return;
+            }
+            setState(() {
+              currentIndex = index;
+            });
+          }
+        },
+      );
+    } else {
+      FooterWidget = BottomBar2(
+        currentIndex: currentIndex,
+        footerData: footerData,
+        onIndexChanged: (index) {
+          if (index == 0) {
+            setState(() {
+              currentIndex = index;
+            });
+          } else {
+            final route = footerChildren[index - 1]['ontap-route'];
+            if (isDisabled(route)) {
+              pluginNotActivated(context);
+              return;
+            }
+            setState(() {
+              currentIndex = index;
+            });
+          }
+        },
+      );
+    }
+  }
+
   Widget getPageForRoute(String route) {
     switch (route) {
       case '/invoice':
@@ -696,28 +768,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: 
-            
-            BottomBar2(
-              currentIndex: currentIndex,
-              footerData: footerData,
-              onIndexChanged: (index) {
-                if (index == 0) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                } else {
-                  final route = footerChildren[index - 1]['ontap-route'];
-                  if (isDisabled(route)) {
-                    pluginNotActivated(context);
-                    return;
-                  }
-                  setState(() {
-                    currentIndex = index;
-                  });
-                }
-              },
-            ),
+            child: FooterWidget,
           )
         ],
       ),
