@@ -226,6 +226,7 @@ class BottomBar2 extends StatelessWidget {
     return ScalingButton(
       onTap: () => onIndexChanged(index),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Stack(
             alignment: Alignment.center,
