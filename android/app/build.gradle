@@ -49,6 +49,6 @@ flutter {
 
 
 dependencies {
-    implementation project(':unityLibrary')
-    // classpath 'com.android.tools.build:gradle:7.6.3'
+    // implementation project(':unityLibrary')
+    // classpath 'com.android.tools.build:gradle:8.10.1'
 }

@@ -8,7 +8,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   firebase_storage
   flutter_inappwebview_windows
-  flutter_unity_widget
   permission_handler_windows
 )
 
