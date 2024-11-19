@@ -60,9 +60,11 @@ dependencies:
   material_symbols_icons: ^4.2791.1
   cunning_document_scanner: ^1.2.3
   firebase_auth: ^5.3.3
+  rename_app: ^1.6.1
   
 
 dev_dependencies:
+  change_app_package_name: ^1.4.0
   flutter_lints: ^3.0.2
   flutter_test:
     sdk: flutter

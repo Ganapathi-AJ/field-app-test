@@ -1,4 +1,4 @@
-package com.example.fieldapp_functionality
+package com.amazon
 
 import io.flutter.embedding.android.FlutterActivity
 
