@@ -129,3 +129,19 @@ jobs:
           git add .
           git commit -m "Cleaned up directories and imports based on commit message"
           git push origin "$branch_name"
+
+      # - name: Create key.properties file
+      #   run: |
+      #       echo "storePassword=$KEYSTORE_PASSWORD" > android/key.properties
+      #       echo "keyPassword=$KEY_PASSWORD" >> android/key.properties
+      #       echo "keyAlias=$KEY_ALIAS" >> android/key.properties
+      #       echo "storeFile=${{ github.workspace }}/android/app/upload-keystore.jks" >> android/key.properties
+
+      - name: Build APK
+        run: flutter build apk --debug
+        
+      - name: Upload APK to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
