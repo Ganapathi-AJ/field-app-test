@@ -1,9 +1,3 @@
-import 'package:fieldapp_functionality/arplugin/arplugin.dart';
-import 'package:fieldapp_functionality/firebase_options.dart';
-import 'package:fieldapp_functionality/home/home.dart';
-import 'package:fieldapp_functionality/imageanaylisys_labled.dart';
-import 'package:fieldapp_functionality/login/redirect.dart';
-import 'package:fieldapp_functionality/plugins.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
