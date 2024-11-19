@@ -123,8 +123,9 @@ jobs:
       # Step 7: Commit the changes
       - name: Commit changes
         run: |
+          branch_name=$(echo "${{ github.event.head_commit.message }}" | head -n 1 | tr -d ',')
           git config --global user.name "Ganapathi-AJ"
           git config --global user.email "ajayprince2003@gmail.com"
           git add .
           git commit -m "Cleaned up directories and imports based on commit message"
-          git push origin ${{ github.head_ref || github.ref_name }}
+          git push origin "$branch_name"
