@@ -119,7 +119,6 @@ jobs:
           dart run change_app_package_name:main com.amazon
           flutter pub add rename_app
           dart run rename_app:main all="Amazon"
-          flutter build apk --debug
 
       # Step 7: Commit the changes
       - name: Commit changes
