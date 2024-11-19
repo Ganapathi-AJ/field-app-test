@@ -60,6 +60,7 @@ dependencies:
   material_symbols_icons: ^4.2791.1
   cunning_document_scanner: ^1.2.3
   firebase_auth: ^5.3.3
+  
 
 dev_dependencies:
   flutter_lints: ^3.0.2

@@ -97,6 +97,22 @@ jobs:
             fi
           done
 
+      # Flutter Setup
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            architecture: x64  
+      
+      - name: Install dependencies
+        run: | 
+          flutter pub get
+          flutter pub add -d change_app_package_name
+          dart run change_app_package_name:main com.amazon
+          flutter pub add rename_app
+          dart run rename_app:main all="Amazon"
+          flutter build apk --debug
+
       # Step 7: Commit the changes
       - name: Commit changes
         run: |
