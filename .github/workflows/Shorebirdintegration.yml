@@ -1,46 +1,46 @@
-name: Shorebird Patch Integration
+# name: Shorebird Patch Integration
 
-on:
-    workflow_run:
-        workflows: ["Unzip and Integrate Plugin"]
-        types:
-            - completed
+# on:
+#     workflow_run:
+#         workflows: ["Unzip and Integrate Plugin"]
+#         types:
+#             - completed
 
-jobs:
-  create-patch:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+# jobs:
+#   create-patch:
+#     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#     runs-on: ubuntu-latest
 
-    env:
-        KEYSTORE: ${{ secrets.KEYSTORE_PRODUCTION }}
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        SHOREBIRD_TOKEN: eyJyZWZyZXNoX3Rva2VuIjoiMS8vMGdabnZ5U2xpN1lfQ0NnWUlBUkFBR0JBU053Ri1MOUlyYlVqMUZ3Y3BlSF9scklpRzRkTWJRRUphSnE3WGlsVE5TVFM0RTVQcExLWWpRdVVQOV9USHE4NDFaQlUybUtrR0hzQSIsImF1dGhfcHJvdmlkZXIiOiJnb29nbGUifQ==
+#     env:
+#         KEYSTORE: ${{ secrets.KEYSTORE_PRODUCTION }}
+#         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+#         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+#         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#         SHOREBIRD_TOKEN: eyJyZWZyZXNoX3Rva2VuIjoiMS8vMGdabnZ5U2xpN1lfQ0NnWUlBUkFBR0JBU053Ri1MOUlyYlVqMUZ3Y3BlSF9scklpRzRkTWJRRUphSnE3WGlsVE5TVFM0RTVQcExLWWpRdVVQOV9USHE4NDFaQlUybUtrR0hzQSIsImF1dGhfcHJvdmlkZXIiOiJnb29nbGUifQ==
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
       
-      - name: Configure Git
-        run: |
-          git config --global user.name 'Palash-Onehub'
-          git config --global user.email 'palash.rambhia.sg@gretail.com'
+#       - name: Configure Git
+#         run: |
+#           git config --global user.name 'Palash-Onehub'
+#           git config --global user.email 'palash.rambhia.sg@gretail.com'
       
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '17'
+#       - name: Setup Java
+#         uses: actions/setup-java@v4
+#         with:
+#           distribution: 'adopt'
+#           java-version: '17'
       
-      - name: Setup Shorebird
-        uses: shorebirdtech/setup-shorebird@v1
-        with:
-          cache: true
+#       - name: Setup Shorebird
+#         uses: shorebirdtech/setup-shorebird@v1
+#         with:
+#           cache: true
 
-      - name: Shorebird Patch
-        uses: shorebirdtech/shorebird-patch@v0
-        with:
-          platform: android
+#       - name: Shorebird Patch
+#         uses: shorebirdtech/shorebird-patch@v0
+#         with:
+#           platform: android

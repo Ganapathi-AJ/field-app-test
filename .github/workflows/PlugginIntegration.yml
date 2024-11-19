@@ -1,4 +1,4 @@
-name: Unzip and Integrate Plugin
+name: Filter Widgets and Cleanup
 
 on:
   push:
@@ -6,88 +6,102 @@ on:
       - '**'
 
 jobs:
-  unzip_and_integrate:
+  filter-widgets:
     runs-on: ubuntu-latest
 
-    env:
-      KEYSTORE: ${{ secrets.KEYSTORE_PRODUCTION }}
-      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-
     steps:
-      - name: Checkout Repository
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-      
-      # - name: Setup Flutter
-      #   uses: subosito/flutter-action@v2
-      #   with:
-      #       channel: 'stable'
-      #       architecture: x64    
-
-      - name: Unzip Attendance Plugin 
-        if: contains(github.event.head_commit.message, 'Activate Attendance')
-        run: |  
-          unzip assets/attendance.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
-
-      # - name: Unzip Sales Plugin
-      #   if: contains(github.event.head_commit.message, 'Activate Sales')
-      #   run: |
-      #     unzip assets/sales.zip -d temp_unzipped_plugin -x "__MACOSX/*" "*/.DS_Store"
-
-      # - name: Move Unzipped Files
-      #   if: contains(github.event.head_commit.message, 'Activate Attendance') || contains(github.event.head_commit.message, 'Activate Sales')
-      #   run: |
-      #     mv temp_unzipped_plugin/* lib/
-
-      # - name: Update main.dart with Attendance Import
-      #   if: contains(github.event.head_commit.message, 'Activate Attendance')
-      #   run: |
-      #     echo "import 'package:fieldapp_functionality/attendance/attendance.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
-
-      # - name: Update main.dart with Sales Import
-      #   if: contains(github.event.head_commit.message, 'Activate Sales')
-      #   run: |
-      #     echo "import 'package:fieldapp_functionality/sales/sales.dart';" | cat - lib/main.dart > temp && mv temp lib/main.dart
-
-      - name: Replace Attendace in main.dart
-        if: contains(github.event.head_commit.message, 'Activate Attendance')
+      # Step 2: Set up Git user
+      - name: Configure Git
         run: |
-          sed -i '63,$d' lib/data-json.dart
-          echo "
-          Map<String, Widget> plugins = {'Attendance': Attendance(),}; 
-          " >> lib/main.dart
+          git config --global user.email "ajayprince2003@gmail.com"
+          git config --global user.name "Ganapathi-AJ"
 
-      - name: Replace Text in invoice_scanning.dart
-        if: contains(github.event.head_commit.message, 'Activate Invoice')
+      # Step 3: Create a new branch using the app name
+      - name: Create new branch
         run: |
-          sed -i "s/title: const Text('Invoice Going')/title: const Text('Invoice Scanning')/" lib/invoice_scanning/invoice_scanning.dart
+          # Extract the first line of the commit message for the branch name
+          branch_name=$(echo "${{ github.event.head_commit.message }}" | head -n 1 | tr -d ',')
+          echo "Branch name: $branch_name"
+          git checkout -b "$branch_name"
 
-      # - name: Add Plugin Based on Commit Message
-      #   if: contains(github.event.head_commit.message, 'Add plugin')
+      # # Step 4: Extract directories to keep from the commit message
+      # - name: Extract widgets to keep
+      #   id: extract_widgets
       #   run: |
-      #     plugin_name=$(echo "${{ github.event.head_commit.message }}" | sed -n 's/^.*Add plugin \([^ ]*\).*$/\1/p')
-      #     if [ -n "$plugin_name" ]; then
-      #       flutter pub add "$plugin_name"
-      #     else
-      #       echo "No plugin specified in commit message."
-      #     fi
+      #     # Extract lines after the first line as directories to keep
+      #     echo "${{ github.event.head_commit.message }}" | tail -n +2 | tr ',' '\n' | awk '{$1=$1;print}' > directories_to_keep.txt
+      #     echo "Directories to keep:"
+      #     cat directories_to_keep.txt
 
-      - name: Commit and Push Changes
+      # Step 5: Remove unnecessary directories
+      # - name: Remove unwanted directories
+      #   run: | 
+      #     # Read directories to keep
+      #     keep_dirs=$(cat directories_to_keep.txt | tr '\n' ' ')
+      #     echo "Keeping these directories: $keep_dirs"
+
+      #     # List all directories in `lib`
+      #     all_dirs=$(ls lib)
+      #     echo "All directories in lib: $all_dirs"
+
+      #     # Remove directories not in the keep list
+      #     for dir in $all_dirs; do
+      #       if [[ ! " $keep_dirs " =~ " $dir " ]]; then
+      #         echo "Removing directory: lib/$dir"
+      #         rm -rf "lib/$dir"
+      #       fi
+      #     done
+
+      # Step 3: Extract directories to remove from the commit message
+      - name: Extract widgets to remove
+        id: extract_widgets
         run: |
-          git config --local user.email "palash.rambhia.sg@gretail.com"
-          git config --local user.name "Palash-Onehub"
+          # Extract all lines from the commit message as directories to remove
+          echo "${{ github.event.head_commit.message }}" | tr ',' '\n' | awk '{$1=$1;print}' > directories_to_remove.txt
+          echo "Directories to remove:"
+          cat directories_to_remove.txt
+
+      # Step 4: Remove specified directories
+      - name: Remove specified directories
+        run: |
+          # Read directories to remove from the file
+          remove_dirs=$(cat directories_to_remove.txt)
+          echo "Removing these directories: $remove_dirs"
+
+          # Remove only the specified directories from `lib`
+          for dir in $remove_dirs; do
+            if [ -d "lib/$dir" ]; then
+              echo "Removing directory: lib/$dir"
+              rm -rf "lib/$dir"
+            else
+              echo "Directory not found: lib/$dir"
+            fi
+          done
+
+      # Step 6: Cleanup imports in main.dart
+      - name: Cleanup imports in main.dart
+        run: |
+          # Read directories to keep
+          keep_dirs=$(cat directories_to_keep.txt | tr '\n' ' ')
+          echo "Cleaning imports for removed directories."
+
+          # Modify main.dart to remove imports for removed directories
+          for dir in $(ls lib); do
+            if [[ ! " $keep_dirs " =~ " $dir " ]]; then
+              echo "Removing imports for: $dir"
+              sed -i "/import 'package:.*$dir.*/d" lib/main.dart
+            fi
+          done
+
+      # Step 7: Commit the changes
+      - name: Commit changes
+        run: |
+          git config --global user.name "Ganapathi-AJ"
+          git config --global user.email "ajayprince2003@gmail.com"
           git add .
-          git commit -m "Integrated New Pluggin"
-
-      - name: Push Changes to Branch
-        run: |
-          git push origin main
+          git commit -m "Cleaned up directories and imports based on commit message"
+          git push --set-upstream origin ${{ github.head_ref || github.ref_name }}
