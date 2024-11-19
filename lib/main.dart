@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
               '/image': (context) => ImageAnalysisScreen(),
               '/image-labled': (context) => ImageAnalysisLabledScreen(),
               '/survey': (context) => const SurveyForm(),
-              '/sales': (context) => const SalesDashboard(),
+              // '/sales': (context) => const SalesDashboard(),
               '/home': (context) => const HomeScreen(),
               '/inventory': (context) => const InventoryManagementScreen(),
               '/knowledge': (context) => const KnowledgeHub(),
@@ -72,14 +72,14 @@ class _HomeState extends State<Home> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const SalesDashboard();
-                  }));
-                },
-                child: const Text("Sales Dashboard")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.of(context)
+            //           .push(MaterialPageRoute(builder: (context) {
+            //         return const SalesDashboard();
+            //       }));
+            //     },
+            //     child: const Text("Sales Dashboard")),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
